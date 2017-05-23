@@ -1,0 +1,22 @@
+<schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://xmlns.oracle.com/CommunityCheck"
+	xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="CommunityCheckProcessRequest">
+		<complexType>
+			<sequence>
+				<element name="transid" type="string" minOccurs="0"/>
+				<element name="msisdn" type="string"/>
+				<element name="type" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="CommunityCheckProcessResponse">
+		<complexType>
+			<sequence>
+				<element name="result" type="string"/>
+				<element name="communityID" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

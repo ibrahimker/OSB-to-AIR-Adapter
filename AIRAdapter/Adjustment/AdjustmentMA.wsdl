@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/INAdjustmentMA/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="INAdjustmentMA" targetNamespace="http://www.example.org/INAdjustmentMA/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/INAdjustmentMA/">
+      <xsd:element name="INAdjustmentMARequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:decimal"/>
+            <xsd:element name="serviceId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="INAdjustmentMAResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="INAdjustmentMARequestMessage">
+    <wsdl:part element="tns:INAdjustmentMARequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="INAdjustmentMAResponseResponse">
+    <wsdl:part element="tns:INAdjustmentMAResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="INAdjustmentMA">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:INAdjustmentMARequestMessage"/>
+      <wsdl:output message="tns:INAdjustmentMAResponseResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="INAdjustmentMASOAP" type="tns:INAdjustmentMA">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/INAdjustmentMA/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="INAdjustmentMA">
+    <wsdl:port binding="tns:INAdjustmentMASOAP" name="INAdjustmentMASOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

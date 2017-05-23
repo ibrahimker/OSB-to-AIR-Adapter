@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/ServiceClass/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServiceClass" targetNamespace="http://www.example.org/ServiceClass/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/ServiceClass/">
+      <xsd:element name="ServiceClassRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="msisdn" type="xsd:string"/>
+            <xsd:element name="currentSC" type="xsd:string"/>
+            <xsd:element name="newSC" type="xsd:string"/>
+            <xsd:element name="chargingId" type="xsd:string"/>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="type" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ServiceClassResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ServiceClassRequestMessage">
+    <wsdl:part element="tns:ServiceClassRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="ServiceClassResponseResponse">
+    <wsdl:part element="tns:ServiceClassResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="ServiceClass">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:ServiceClassRequestMessage"/>
+      <wsdl:output message="tns:ServiceClassResponseResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceClassSOAP" type="tns:ServiceClass">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/ServiceClass/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceClass">
+    <wsdl:port binding="tns:ServiceClassSOAP" name="ServiceClassSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

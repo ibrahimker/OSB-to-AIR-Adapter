@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/INAdjMALifetime/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="INAdjMALifetime" targetNamespace="http://www.example.org/INAdjMALifetime/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/INAdjMALifetime/">
+      <xsd:element name="INAdjMALifetimeRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+            <xsd:element name="relativeDateAdj" type="xsd:decimal"/>
+            <xsd:element name="serviceId" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="INAdjMALifetimeResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:decimal"/>
+            <xsd:element name="oldExpiryDate" type="xsd:decimal"/>
+            <xsd:element name="newExpiryDate" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="INAdjMALifetimeRequestMessage">
+    <wsdl:part element="tns:INAdjMALifetimeRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="INAdjMALifetimeResponseResponse">
+    <wsdl:part element="tns:INAdjMALifetimeResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="INAdjMALifetime">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:INAdjMALifetimeRequestMessage"/>
+      <wsdl:output message="tns:INAdjMALifetimeResponseResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="INAdjMALifetimeSOAP" type="tns:INAdjMALifetime">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/INAdjMALifetime/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="INAdjMALifetime">
+    <wsdl:port binding="tns:INAdjMALifetimeSOAP" name="INAdjMALifetimeSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/GetAllAccumulator/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GetAllAccumulator" targetNamespace="http://www.example.org/GetAllAccumulator/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/GetAllAccumulator/">
+      <xsd:element name="GetAllAccumulatorRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+            <xsd:element name="type" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAllAccumulatorResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="status" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAllAccumulatorRequestMessage">
+    <wsdl:part element="tns:GetAllAccumulatorRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllAccumulatorResponseMessage">
+    <wsdl:part element="tns:GetAllAccumulatorResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="GetAccumulator">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:GetAllAccumulatorRequestMessage"/>
+      <wsdl:output message="tns:GetAllAccumulatorResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetAllAccumulatorSOAP" type="tns:GetAccumulator">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/GetAllAccumulator/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetAllAccumulator">
+    <wsdl:port binding="tns:GetAllAccumulatorSOAP" name="GetAllAccumulatorSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

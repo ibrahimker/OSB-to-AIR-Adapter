@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GetMultiDA" targetNamespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/">
+      <xsd:annotation>
+        <xsd:documentation>@author: Ibam</xsd:documentation>
+      </xsd:annotation>
+      <xsd:element name="GetMultiDA">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="transID" type="xsd:string" />
+          	<xsd:element name="msisdn" type="xsd:string"></xsd:element>
+            <xsd:element name="dedicatedAccountID" type="xsd:string" maxOccurs="unbounded"></xsd:element>
+            <!--xsd:element name="dedicatedAccountIDLast" type="xsd:string"></xsd:element-->
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetMultiDAResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="status" type="xsd:string" />
+          	<xsd:element name="description" type="xsd:string"></xsd:element>
+          	<xsd:element name="dedicatedAccountCollection"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="dedicatedAccountCollection">
+      	<xsd:sequence>
+      		<xsd:element name="dedicatedAccountData"></xsd:element>
+      	</xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetMultiDARequest">
+    <wsdl:part element="tns:GetMultiDA" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetMultiDAResponse">
+    <wsdl:part element="tns:GetMultiDAResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="GetMultiDA">
+    <wsdl:operation name="GetMultiDA">
+      <wsdl:input message="tns:GetMultiDARequest"/>
+      <wsdl:output message="tns:GetMultiDAResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetMultiDASOAP" type="tns:GetMultiDA">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetMultiDA">
+      <soap:operation soapAction="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/GetMultiDA"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetMultiDA">
+    <wsdl:port binding="tns:GetMultiDASOAP" name="GetMultiDASOAP">
+      <soap:address location="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/GetMultiDA"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

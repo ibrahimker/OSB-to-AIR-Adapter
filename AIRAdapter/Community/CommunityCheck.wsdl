@@ -1,0 +1,41 @@
+<definitions name="INCommunityCheck" targetNamespace="http://xmlns.oracle.com/CommunityCheck" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/CommunityCheck" xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:client="http://xmlns.oracle.com/CommunityCheck"> 
+    <types> 
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"> 
+            <import namespace="http://xmlns.oracle.com/CommunityCheck" schemaLocation="CommunityCheck.xsd"/> 
+        </schema> 
+    </types> 
+    <message name="CommunityCheckRequestMessage"> 
+        <part name="payload" element="tns:CommunityCheckProcessRequest"/> 
+    </message> 
+    <message name="CommunityCheckResponseMessage"> 
+        <part name="payload" element="tns:CommunityCheckProcessResponse"/> 
+    </message> 
+    <portType name="CommunityCheck"> 
+        <operation name="process"> 
+            <input message="tns:CommunityCheckRequestMessage"/> 
+            <output message="tns:CommunityCheckResponseMessage"/> 
+        </operation> 
+    </portType> 
+    <binding name="CommunityCheckBinding" type="tns:CommunityCheck"> 
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/> 
+        <operation name="process"> 
+            <soap:operation style="document" soapAction="process"/> 
+            <input> 
+                <soap:body use="literal"/> 
+            </input> 
+            <output> 
+                <soap:body use="literal"/> 
+            </output> 
+        </operation> 
+    </binding> 
+    <service name="INCommunityCheck"> 
+        <port name="CommunityCheckPort" binding="tns:CommunityCheckBinding"> 
+            <soap:address location="http://test1:9700/orabpel/default/INCommunityCheck/1.0"/> 
+        </port> 
+    </service> 
+    <plnk:partnerLinkType name="CommunityCheck"> 
+        <plnk:role name="CommunityCheckProvider"> 
+          <plnk:portType name="tns:CommunityCheck"/> 
+      </plnk:role> 
+  </plnk:partnerLinkType> 
+</definitions>

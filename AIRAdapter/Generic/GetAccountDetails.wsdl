@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://indosatooredoo.com/ngssp/schemas/GetAccountDetails/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GetAccountDetails" targetNamespace="http://indosatooredoo.com/ngssp/schemas/GetAccountDetails/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://indosatooredoo.com/ngssp/schemas/GetAccountDetails/">
+      <xsd:annotation>
+        <xsd:documentation>@author: Ibam</xsd:documentation>
+      </xsd:annotation>
+      <xsd:element name="GetAccountDetails">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transID" type="xsd:string" />
+            <xsd:element name="msisdn" type="xsd:string"></xsd:element>
+            <xsd:element name="requestActiveOffersFlag" type="xsd:string" default="1"></xsd:element>
+            <xsd:element name="requestMasterAccountBalanceFlag" type="xsd:string" default="1"/>
+<!--             <xsd:element name="accountGroupID" type="xsd:byte" minOccurs="0"></xsd:element>
+            <xsd:element name="activationDate" type="xsd:byte" minOccurs="0"></xsd:element>
+            <xsd:element name="serviceClass" type="xsd:byte" minOccurs="0"></xsd:element>
+            <xsd:element name="expiredDate" type="xsd:byte" minOccurs="0"></xsd:element>
+            <xsd:element name="terminateDate" type="xsd:byte" minOccurs="0"></xsd:element>
+            <xsd:element name="pso" type="xsd:byte" minOccurs="0"></xsd:element> -->
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetAccountDetailsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="content" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    
+      <xsd:complexType name="dedicatedAccountCollection">
+        <xsd:sequence>
+          <xsd:element name="dedicatedAccountData"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAccountDetailsRequest">
+    <wsdl:part element="tns:GetAccountDetails" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountDetailsResponse">
+    <wsdl:part element="tns:GetAccountDetailsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="GetAccountDetails">
+    <wsdl:operation name="GetAccountDetails">
+      <wsdl:input message="tns:GetAccountDetailsRequest"/>
+      <wsdl:output message="tns:GetAccountDetailsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetAccountDetailsSOAP" type="tns:GetAccountDetails">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetAccountDetails">
+      <soap:operation soapAction="http://indosatooredoo.com/ngssp/schemas/GetAccountDetails/GetAccountDetails"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetAccountDetails">
+    <wsdl:port binding="tns:GetAccountDetailsSOAP" name="GetAccountDetailsSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

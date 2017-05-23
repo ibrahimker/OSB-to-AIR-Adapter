@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/GetINAllInfo2/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GetINAllInfo2" targetNamespace="http://www.example.org/GetINAllInfo2/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/GetINAllInfo2/">
+      <xsd:element name="GetINAllInfo2Request">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetINAllInfo2Response">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="status" type="xsd:string"/>
+            <xsd:element name="maBalance" type="xsd:decimal"/>
+            <xsd:element name="serviceClass" type="xsd:integer"/>
+            <xsd:element name="expiredDate" type="xsd:string"/>
+			<xsd:element name="terminateDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="da1" type="xsd:decimal"/>
+            <xsd:element name="da2" type="xsd:decimal"/>
+            <xsd:element name="da3" type="xsd:decimal"/>
+            <xsd:element name="da4" type="xsd:decimal"/>
+            <xsd:element name="da5" type="xsd:decimal"/>
+            <xsd:element name="da6" type="xsd:decimal"/>
+            <xsd:element name="da7" type="xsd:decimal"/>
+            <xsd:element name="da8" type="xsd:decimal"/>
+            <xsd:element name="da9" type="xsd:decimal"/>
+            <xsd:element name="da10" type="xsd:decimal"/>
+            <xsd:element name="da11" type="xsd:decimal"/>
+            <xsd:element name="da12" type="xsd:decimal"/>
+            <xsd:element name="da13" type="xsd:decimal"/>
+            <xsd:element name="da14" type="xsd:decimal"/>
+            <xsd:element name="da15" type="xsd:decimal"/>
+            <xsd:element name="da16" type="xsd:decimal"/>
+            <xsd:element name="da17" type="xsd:decimal"/>
+            <xsd:element name="da18" type="xsd:decimal"/>
+            <xsd:element name="da19" type="xsd:decimal"/>
+            <xsd:element name="da20" type="xsd:decimal"/>
+            <xsd:element name="da21" type="xsd:decimal"/>
+            <xsd:element name="da22" type="xsd:decimal"/>
+            <xsd:element name="da23" type="xsd:decimal"/>
+            <xsd:element name="da24" type="xsd:decimal"/>
+            <xsd:element name="da25" type="xsd:decimal"/>
+            <xsd:element name="da26" type="xsd:decimal"/>
+            <xsd:element name="da27" type="xsd:decimal"/>
+            <xsd:element name="da28" type="xsd:decimal"/>
+            <xsd:element name="da29" type="xsd:decimal"/>
+            <xsd:element name="da30" type="xsd:decimal"/>
+            <xsd:element name="da31" type="xsd:decimal"/>
+            <xsd:element name="da32" type="xsd:decimal"/>
+            <xsd:element name="da33" type="xsd:decimal"/>
+            <xsd:element name="da34" type="xsd:decimal"/>
+            <xsd:element name="da35" type="xsd:decimal"/>
+            <xsd:element name="da36" type="xsd:decimal"/>
+            <xsd:element name="da37" type="xsd:decimal"/>
+            <xsd:element name="da38" type="xsd:decimal"/>
+            <xsd:element name="da39" type="xsd:decimal"/>
+            <xsd:element name="da40" type="xsd:decimal"/>
+            <xsd:element name="da41" type="xsd:decimal"/>
+            <xsd:element name="da42" type="xsd:decimal"/>
+            <xsd:element name="da43" type="xsd:decimal"/>
+            <xsd:element name="da44" type="xsd:decimal"/>
+            <xsd:element name="da45" type="xsd:decimal"/>
+            <xsd:element name="da46" type="xsd:decimal"/>
+            <xsd:element name="da47" type="xsd:decimal"/>
+            <xsd:element name="da48" type="xsd:decimal"/>
+            <xsd:element name="da49" type="xsd:decimal"/>
+            <xsd:element name="da50" type="xsd:decimal"/>
+            <xsd:element name="da51" type="xsd:decimal"/>
+            <xsd:element name="da52" type="xsd:decimal"/>
+            <xsd:element name="da53" type="xsd:decimal"/>
+            <xsd:element name="da54" type="xsd:decimal"/>
+            <xsd:element name="da55" type="xsd:decimal"/>
+            <xsd:element name="da56" type="xsd:decimal"/>
+            <xsd:element name="da57" type="xsd:decimal"/>
+            <xsd:element name="da58" type="xsd:decimal"/>
+            <xsd:element name="da59" type="xsd:decimal"/>
+            <xsd:element name="da60" type="xsd:decimal"/>
+            <xsd:element name="da61" type="xsd:decimal"/>
+            <xsd:element name="da62" type="xsd:decimal"/>
+            <xsd:element name="da63" type="xsd:decimal"/>
+            <xsd:element name="da64" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetINAllInfo2RequestMessage">
+    <wsdl:part element="tns:GetINAllInfo2Request" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetINAllInfo2ResponseResponse">
+    <wsdl:part element="tns:GetINAllInfo2Response" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="GetINAllInfo2">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:GetINAllInfo2RequestMessage"/>
+      <wsdl:output message="tns:GetINAllInfo2ResponseResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetINAllInfo2SOAP" type="tns:GetINAllInfo2">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/GetINAllInfo2/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetINAllInfo2">
+    <wsdl:port binding="tns:GetINAllInfo2SOAP" name="GetINAllInfo2SOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

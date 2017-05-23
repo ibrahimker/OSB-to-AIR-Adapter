@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://indosatooredoo.com/ngssp/schemas/RefillVoucher/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RefillVoucher" targetNamespace="http://indosatooredoo.com/ngssp/schemas/RefillVoucher/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://indosatooredoo.com/ngssp/schemas/RefillVoucher/">
+      <xsd:annotation>
+        <xsd:documentation>@author: Ibam</xsd:documentation>
+      </xsd:annotation>
+      <xsd:element name="RefillVoucher">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transID" type="xsd:string" />
+            <xsd:element name="msisdn" type="xsd:string"></xsd:element>
+            <xsd:element name="voucherActivationCode" type="xsd:string"></xsd:element>
+            <xsd:element name="serviceId" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RefillVoucherResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="content" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    
+      <xsd:complexType name="dedicatedAccountCollection">
+        <xsd:sequence>
+          <xsd:element name="dedicatedAccountData"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="RefillVoucherRequest">
+    <wsdl:part element="tns:RefillVoucher" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="RefillVoucherResponse">
+    <wsdl:part element="tns:RefillVoucherResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="RefillVoucher">
+    <wsdl:operation name="RefillVoucher">
+      <wsdl:input message="tns:RefillVoucherRequest"/>
+      <wsdl:output message="tns:RefillVoucherResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RefillVoucherSOAP" type="tns:RefillVoucher">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="RefillVoucher">
+      <soap:operation soapAction="http://indosatooredoo.com/ngssp/schemas/RefillVoucher/RefillVoucher"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RefillVoucher">
+    <wsdl:port binding="tns:RefillVoucherSOAP" name="RefillVoucherSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

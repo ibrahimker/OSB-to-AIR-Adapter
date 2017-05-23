@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/GetINMainInfo/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GetINMainInfo" targetNamespace="http://www.example.org/GetINMainInfo/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/GetINMainInfo/">
+      <xsd:element name="GetINMainInfoRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetINMainInfoResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="status" type="xsd:string"/>
+            <xsd:element name="maBalance" type="xsd:decimal"/>
+            <xsd:element name="expiredDate" type="xsd:dateTime"/>
+			<xsd:element name="terminateDate" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="serviceClass" type="xsd:dateTime"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetINMainInfoRequestMessage">
+    <wsdl:part element="tns:GetINMainInfoRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetINMainInfoResponseResponse">
+    <wsdl:part element="tns:GetINMainInfoResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="GetINMainInfo">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:GetINMainInfoRequestMessage"/>
+      <wsdl:output message="tns:GetINMainInfoResponseResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetINMainInfoSOAP" type="tns:GetINMainInfo">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/GetINMainInfo/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetINMainInfo">
+    <wsdl:port binding="tns:GetINMainInfoSOAP" name="GetINMainInfoSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

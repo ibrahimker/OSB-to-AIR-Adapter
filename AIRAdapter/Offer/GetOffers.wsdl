@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/GetOffers/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GetOffers" targetNamespace="http://www.example.org/GetOffers/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/GetOffers/">
+      <xsd:element name="GetOffersRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+            <xsd:element name="offerIdFirst" type="xsd:decimal" minOccurs="0"/>
+            <xsd:element name="offerIdLast" type="xsd:decimal" minOccurs="0"/>
+            <xsd:element name="requestInactiveOffersFlag" type="xsd:decimal" minOccurs="0"/>
+            <xsd:element name="offerRequestedTypeFlag" type="xsd:decimal" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetOffersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="status" type="xsd:decimal"/>
+            <xsd:element name="Offers" minOccurs="0">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="Offer" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetOffersRequestMessage">
+    <wsdl:part element="tns:GetOffersRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetOffersResponseResponse">
+    <wsdl:part element="tns:GetOffersResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="GetOffers">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:GetOffersRequestMessage"/>
+      <wsdl:output message="tns:GetOffersResponseResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetOffersSOAP" type="tns:GetOffers">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/GetOffers/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetOffers">
+    <wsdl:port binding="tns:GetOffersSOAP" name="GetOffersSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

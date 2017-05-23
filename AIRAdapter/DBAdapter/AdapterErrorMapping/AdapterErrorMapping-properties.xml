@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="ADAPTER_ERROR_MAPPING.DESCRIPTION:db_column_size">500</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.MODULE:db_column_type">VARCHAR2</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.ERROR_CODE:db_column_not_null">false</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.ERROR_CODE:db_column_size">20</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.DESCRIPTION:db_column_not_null">false</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.MODULE:db_column_not_null">true</entry>
+   <entry key="ADAPTER_ERROR_MAPPING:db_table_type">TABLE</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.MODULE:db_column_size">100</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.STATUS:db_column_type">VARCHAR2</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.DESCRIPTION:db_column_type">VARCHAR2</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.STATUS:db_column_not_null">false</entry>
+   <entry key="root_descriptor_alias">ADAPTER_ERROR_MAPPING</entry>
+   <entry key="ADAPTER_ERROR_MAPPING:db_column_3">ERROR_CODE</entry>
+   <entry key="ADAPTER_ERROR_MAPPING:db_column_2">DESCRIPTION</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.ERROR_CODE:db_column_type">VARCHAR2</entry>
+   <entry key="ADAPTER_ERROR_MAPPING:db_column_1">STATUS</entry>
+   <entry key="ADAPTER_ERROR_MAPPING:db_column_0">MODULE</entry>
+   <entry key="ADAPTER_ERROR_MAPPING.STATUS:db_column_size">200</entry>
+</properties>

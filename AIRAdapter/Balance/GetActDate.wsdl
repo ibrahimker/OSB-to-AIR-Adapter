@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/GetActDate/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="GetActDate" targetNamespace="http://www.example.org/GetActDate/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/GetActDate/">
+      <xsd:element name="GetActDateRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetActDateResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="tid" type="xsd:string"/>
+            <xsd:element name="status" type="xsd:decimal"/>
+            <xsd:element name="activeDate" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetActDateRequestMessage">
+    <wsdl:part element="tns:GetActDateRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetActDateResponseResponse">
+    <wsdl:part element="tns:GetActDateResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="GetActDate">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:GetActDateRequestMessage"/>
+      <wsdl:output message="tns:GetActDateResponseResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetActDateSOAP" type="tns:GetActDate">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/GetActDateSOAP/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetActDate">
+    <wsdl:port binding="tns:GetActDateSOAP" name="GetActDateSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
