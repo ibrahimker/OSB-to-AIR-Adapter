@@ -24,6 +24,10 @@
                     <con3:userNsDecl prefix="get2" namespace="http://www.example.org/GetActDate/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:userNsDecl prefix="get3" namespace="http://www.example.org/GetOffers/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:userNsDecl prefix="upd1" namespace="http://www.example.org/UpdateOffer/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getOrderID"/>
+                    </con3:dependencies>
                 </con:context>
                 <con:actions>
                     <con5:assign varName="startreqbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
@@ -42,6 +46,12 @@
                         <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-a045ad1.N65fc0c5c.0.15b328f6f1d.N7b03</con3:id>
                         <con2:expr>
                             <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/del:DeleteOfferRequest/msisdn/text()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="orderID">
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57d46f.4e7b57cb.0.15c35f54992.N7fa3</con3:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getOrderID($msisdn,$startreqbe)</con3:xqueryText>
                         </con2:expr>
                     </con2:assign>
                 </con:actions>
@@ -72,6 +82,10 @@
                     <con3:userNsDecl prefix="del" namespace="http://indosatooredoo.com/ngssp/schemas/DeleteOffer/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:userNsDecl prefix="ind" namespace="http://www.indosatooredoo.com" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:userNsDecl prefix="upd1" namespace="http://www.example.org/UpdateOffer/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/formatDateTime"/>
+                    </con3:dependencies>
                 </con:context>
                 <con:actions>
                     <con2:replace varName="body" contents-only="true">
@@ -101,13 +115,13 @@
 <member>
 <name>originTransactionID</name>
 <value>
-<string>111111</string>
+<string>{$orderID}</string>
 </value>
 </member>
 <member>
 <name>originTimeStamp</name>
 <value>
-<dateTime.iso8601>{fn:concat(fn-bea:dateTime-to-string-with-format("yyyyMMdd",fn:current-dateTime()),"T",fn-bea:dateTime-to-string-with-format("hh:mm:ss",fn:current-dateTime()),"+0700")}</dateTime.iso8601>
+<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
 </value>
 </member>
 <member>
@@ -154,7 +168,7 @@
 <StartTimestamp>{$startreqbe}</StartTimestamp>
 <EndTimestamp>{current-dateTime()}</EndTimestamp>
 <TransactionId>{$transID}</TransactionId>
-<OrderId>{$transID}</OrderId>
+<OrderId>{$orderID}</OrderId>
 <RequestType>REQ_BE</RequestType>
 <CallingHostName>{$OSBHostname}</CallingHostName>
 <CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
@@ -270,7 +284,7 @@ return $status</con3:xqueryText>
 <StartTimestamp>{$startresbe}</StartTimestamp>
 <EndTimestamp>{current-dateTime()}</EndTimestamp>
 <TransactionId>{$transID}</TransactionId>
-<OrderId>{$transID}</OrderId>
+<OrderId>{$orderID}</OrderId>
 <RequestType>RES_BE</RequestType>
 <CallingHostName>{$OSBHostname}</CallingHostName>
 <CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
@@ -327,7 +341,7 @@ return $status</con3:xqueryText>
 <StartTimestamp>{$startreqbe}</StartTimestamp>
 <EndTimestamp>{current-dateTime()}</EndTimestamp>
 <TransactionId>{$transID}</TransactionId>
-<OrderId>{$transID}</OrderId>
+<OrderId>{$orderID}</OrderId>
 <RequestType>RES_BE</RequestType>
 <CallingHostName>{$OSBHostname}</CallingHostName>
 <CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
