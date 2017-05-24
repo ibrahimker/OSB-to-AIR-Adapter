@@ -19,7 +19,7 @@ If it is of interest to see the relations between instansiated resources (UA/DA)
         <tran:provider-id>http</tran:provider-id>
         <tran:inbound>false</tran:inbound>
         <tran:URI>
-            <env:value>http://10.201.4.208:10011/Air</env:value>
+            <env:value>http://10.201.60.214:10011/Air</env:value>
         </tran:URI>
         <tran:outbound-properties>
             <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
