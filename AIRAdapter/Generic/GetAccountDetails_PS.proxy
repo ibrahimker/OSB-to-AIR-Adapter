@@ -31,8 +31,7 @@
         <tran:provider-specific xsi:type="http:HttpEndPointConfiguration" xmlns:http="http://www.bea.com/wli/sb/transports/http">
             <http:inbound-properties/>
             <http:compression>
-                <http:compression-support>true</http:compression-support>
-                <http:compression-buffering>true</http:compression-buffering>
+                <http:compression-support>false</http:compression-support>
             </http:compression>
         </tran:provider-specific>
     </ser:endpointConfig>
