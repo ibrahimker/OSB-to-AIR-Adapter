@@ -10,7 +10,7 @@
 	let $startDate := $body/methodResponse/params/param/value/struct/member[name="dedicatedAccountInformation"]/value/array/data/value/struct/member[name="startDate"]/value/dateTime.iso8601/text()
         return concat(local:normaliseDAValue(xs:integer($davalue),xs:integer($daUnitType)),";",substring($expiryDate,1,8),";",substring($startDate,1,8))
       else
-         "0;99991231;00000101"
+         "0"
 }
 </daBalance>
 </get:GetINDABalanceResponse>

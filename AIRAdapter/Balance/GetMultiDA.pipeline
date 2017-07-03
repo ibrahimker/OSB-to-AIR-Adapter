@@ -70,6 +70,12 @@
                             <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerHost()</con3:xqueryText>
                         </con2:expr>
                     </con2:assign>
+                    <con2:assign varName="OSBHostname">
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57d46f.64870fe7.0.15c687e432e.N7fdd</con3:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">if(fn:contains($OSBHostname,'.'))then fn:substring-before($OSBHostname,'.') else $OSBHostname</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
                     <con2:assign varName="OSBIPAddress">
                         <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a675e.51314069.0.15b89a314ed.N7e86</con3:id>
                         <con2:expr>

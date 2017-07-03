@@ -58,7 +58,7 @@
 <string>
 {
 	if(fn:exists($body/inad:INAdjustmentMARequest/serviceId/text())) then
-	$body/inad:INAdjMALifetimeRequest/serviceId/text()
+	$body/inad:INAdjustmentMARequest/serviceId/text()
 	else 111111
 }
 </string>

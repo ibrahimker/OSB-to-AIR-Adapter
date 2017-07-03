@@ -14,7 +14,10 @@
         <tran:provider-id>jms</tran:provider-id>
         <tran:inbound>false</tran:inbound>
         <tran:URI>
-            <env:value>jms://vNGSSPApp01s:8005/jms.Ngssp_ConnectionFactory/jms.Ngssp_CommonQueue</env:value>
+            <!-- SIT Server -->
+            <!-- <env:value>jms://10.147.114.14:8005/jms.Ngssp_ConnectionFactory/jms.Ngssp_CommonQueue</env:value> -->
+            <!-- UAT D1 Server -->
+            <env:value>jms://10.147.114.15:8003/jms.Ngssp_ConnectionFactory/jms.Ngssp_CommonQueue</env:value>
         </tran:URI>
         <tran:outbound-properties>
             <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>

@@ -63,6 +63,12 @@
                             <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerHost()</con3:xqueryText>
                         </con2:expr>
                     </con2:assign>
+                    <con2:assign varName="OSBHostname">
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57d46f.64870fe7.0.15c687e432e.N7ffe</con3:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">if(fn:contains($OSBHostname,'.'))then fn:substring-before($OSBHostname,'.') else $OSBHostname</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
                     <con2:assign varName="OSBIPAddress">
                         <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a679e.Ndcacaa4.0.15b816a79f8.N79ff</con3:id>
                         <con2:expr>
@@ -77,6 +83,7 @@
                     <con3:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:userNsDecl prefix="del" namespace="http://indosatooredoo.com/ngssp/schemas/DeleteOffer/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="get1" namespace="http://www.example.org/GetOffers/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:userNsDecl prefix="ind" namespace="http://www.indosatooredoo.com" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
                     <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
@@ -91,51 +98,102 @@
                         </con2:location>
                         <con2:expr>
                             <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config"><![CDATA[<methodCall>
-<methodName>GetOffers</methodName>
-<params>
-<param>
-<value>
-<struct>
-<member>
-<name>originNodeType</name>
-<value>
-<string>EXT</string>
-</value>
-</member>
-<member>
-<name>originHostName</name>
-<value>
-<string>{$OSBHostname}</string>
-</value>
-</member>
-<member>
-<name>originTransactionID</name>
-<value>
-<string>{$orderID}</string>
-</value>
-</member>
-<member>
-<name>originTimeStamp</name>
-<value>
-<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
-</value>
-</member>
-<member>
-<name>subscriberNumberNAI</name>
-<value>
-<i4>1</i4>
-</value>
-</member>
-<member>
-<name>subscriberNumber</name>
-<value>
-<string>{$msisdn}</string>
-</value>
-</member>
-</struct>
-</value>
-</param>
-</params>
+	<methodName>GetOffers</methodName>
+	<params>
+		<param>
+			<value>
+				<struct>
+					<member>
+						<name>originNodeType</name>
+						<value>
+							<string>EXT</string>
+						</value>
+					</member>
+					<member>
+						<name>originHostName</name>
+						<value>
+							<string>{$OSBHostname}</string>
+						</value>
+					</member>
+					<member>
+						<name>originTransactionID</name>
+						<value>
+							<string>{$orderID}</string>
+						</value>
+					</member>
+					<member>
+						<name>originTimeStamp</name>
+						<value>
+							<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
+						</value>
+					</member>
+					<member>
+						<name>subscriberNumberNAI</name>
+						<value>
+							<i4>1</i4>
+						</value>
+					</member>
+					<member>
+						<name>subscriberNumber</name>
+						<value>
+							<string>{$msisdn}</string>
+						</value>
+					</member>
+					{
+					if(fn:exists($body/get1:GetOffersRequest/offerIdFirst/text()) and fn:exists($body/get1:GetOffersRequest/offerIdLast/text())) then
+					<member>
+						<name>offerSelection</name>
+						<value>
+							<array>
+								<data>
+									<value>
+										<struct>
+											<member>
+												<name>offerIDFirst</name>
+												<value>
+													<i4>{$body/get1:GetOffersRequest/offerIdFirst/text()}</i4>
+												</value>
+											</member>
+											<member>
+												<name>offerIDLast</name>
+												<value>
+													<i4>{$body/get1:GetOffersRequest/offerIdLast/text()}</i4>
+												</value>
+											</member>
+										</struct>
+									</value>
+								</data>
+							</array>
+						</value>
+					</member>
+					else if(fn:exists($body/get1:GetOffersRequest/offerIdFirst/text())) then
+					<member>
+						<name>offerSelection</name>
+						<value>
+							<array>
+								<data>
+									<value>
+										<struct>
+											<member>
+												<name>offerIDFirst</name>
+												<value>
+													<i4>{$body/get1:GetOffersRequest/offerIdFirst/text()}</i4>
+												</value>
+											</member>
+										</struct>
+									</value>
+								</data>
+							</array>
+						</value>
+					</member>
+					else
+					''
+					}
+					
+				</struct>
+			</value>
+		</param>
+	</params>
 </methodCall>]]></con3:xqueryText>
                         </con2:expr>
                     </con2:replace>

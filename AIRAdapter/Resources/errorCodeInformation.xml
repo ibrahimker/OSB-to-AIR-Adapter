@@ -231,8 +231,8 @@
     </row>
     <row>
         <backEndStatus>139</backEndStatus>
-        <backEndDescription>Dedicated account not defined</backEndDescription>
-        <frontEndStatus>1</frontEndStatus>
+        <backEndDescription>OK but dedicated account not defined</backEndDescription>
+        <frontEndStatus>0</frontEndStatus>
     </row>
     <row>
         <backEndStatus>140</backEndStatus>
@@ -506,8 +506,8 @@
     </row>
     <row>
         <backEndStatus>213</backEndStatus>
-        <backEndDescription>Sub dedicated account not defined</backEndDescription>
-        <frontEndStatus>1</frontEndStatus>
+        <backEndDescription>OK but Sub dedicated account not defined</backEndDescription>
+        <frontEndStatus>0</frontEndStatus>
     </row>
     <row>
         <backEndStatus>214</backEndStatus>
