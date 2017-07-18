@@ -364,7 +364,7 @@ return $status</con3:xqueryText>
 <Command></Command>
 <MSISDN>{$msisdn}</MSISDN>
 <PackageCompositeKey></PackageCompositeKey>
-<RequestMessage></RequestMessage>
+<RequestMessage>{$body}</RequestMessage>
 <ResponseMessage>{$fault}</ResponseMessage>
 <StatusCode>99</StatusCode>
 <StatusDescription>Backend Not Available</StatusDescription>

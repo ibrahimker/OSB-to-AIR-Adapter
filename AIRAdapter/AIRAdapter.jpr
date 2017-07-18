@@ -118,9 +118,19 @@
             <value n="profileClass" v="SbProjectDeployProfile"/>
             <value n="profileName" v="AIRAdapter"/>
          </hash>
+         <hash n="ServiceBus1">
+            <value n="profileClass" v="SbAppDeployProfile"/>
+            <value n="profileName" v="ServiceBus1"/>
+         </hash>
+         <hash n="ServiceBus2">
+            <value n="profileClass" v="SbProjectDeployProfile"/>
+            <value n="profileName" v="ServiceBus2"/>
+         </hash>
       </hash>
       <list n="profileList">
          <string v="AIRAdapter"/>
+         <string v="ServiceBus1"/>
+         <string v="ServiceBus2"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">

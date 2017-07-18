@@ -58,7 +58,7 @@ Addressing a multiple purchase product offer with only the offer id (omitting th
                 <http:chunked-streaming-mode>false</http:chunked-streaming-mode>
                 <http:session-sctikiness enabled="false" session-id-name="JSESSIONID"/>
             </http:outbound-properties>
-            <http:dispatch-policy>SBDefaultResponseWorkManager</http:dispatch-policy>
+            <http:dispatch-policy>WorkManager-Backend-1-BS</http:dispatch-policy>
             <http:compression>
                 <http:compression-support>false</http:compression-support>
             </http:compression>

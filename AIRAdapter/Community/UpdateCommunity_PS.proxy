@@ -30,6 +30,7 @@
         <tran:inbound-properties/>
         <tran:provider-specific xsi:type="http:HttpEndPointConfiguration" xmlns:http="http://www.bea.com/wli/sb/transports/http">
             <http:inbound-properties/>
+            <http:dispatch-policy>WorkManager-Backend-1-PS</http:dispatch-policy>
             <http:compression>
                 <http:compression-support>true</http:compression-support>
                 <http:compression-buffering>true</http:compression-buffering>

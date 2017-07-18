@@ -162,6 +162,18 @@
 <i4>{$body/ser:ServiceClassRequest/newSC/text()}</i4>
 </value>
 </member>
+<member>
+<name>externalData1</name>
+<value>
+<string>
+{
+	if(fn:exists($body/ser:ServiceClassRequest/chargingId/text())) then
+	$body/ser:ServiceClassRequest/chargingId/text()
+	else 111111
+}
+</string>
+</value>
+</member>
 </struct>
 </value>
 </param>
