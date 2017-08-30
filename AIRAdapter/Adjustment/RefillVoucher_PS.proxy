@@ -12,7 +12,9 @@
             </con:binding>
             <con:selector type="SOAP body"/>
         </ser:binding>
-        <oper:operations enabled="true"/>
+        <oper:operations enabled="true">
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
+        </oper:operations>
         <ser:ws-policy>
             <ser:binding-mode>no-policies</ser:binding-mode>
         </ser:ws-policy>
@@ -30,7 +32,6 @@
         <tran:inbound-properties/>
         <tran:provider-specific xsi:type="http:HttpEndPointConfiguration" xmlns:http="http://www.bea.com/wli/sb/transports/http">
             <http:inbound-properties/>
-            <http:dispatch-policy>WorkManager-Backend-1-PS</http:dispatch-policy>
             <http:compression>
                 <http:compression-support>false</http:compression-support>
             </http:compression>

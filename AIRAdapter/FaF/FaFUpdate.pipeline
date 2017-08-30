@@ -1,0 +1,1827 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="AIRAdapter/FaF/FaFUpdate"/>
+            <con:binding>
+                <con:name>FnSActionSOAP</con:name>
+                <con:namespace>http://www.example.org/FnSAction/</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-a0a67ab.N3c5540f4.0.15de62d0852.N7d42" errorHandler="error-a0a67ab.N3c5540f4.0.15de62d0852.N7b59" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7d41" name="Initialisation">
+                <con:context>
+                    <con1:userNsDecl prefix="get6" namespace="http://www.example.org/GetINAllInfo2/"/>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulators/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="fns" namespace="http://www.example.org/FnSAction/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://www.example.org/GetActDate/"/>
+                    <con1:userNsDecl prefix="get3" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get4" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con1:userNsDecl prefix="get5" namespace="http://www.example.org/GetINAllInfo/"/>
+                    <con1:userNsDecl prefix="inc" namespace="http://xmlns.oracle.com/INCheckCurrentSubsription"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getOrderID"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con5:assign varName="startreqbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d40</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                    <con2:assign varName="transID">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d3f</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/fns:addFnSMemberRequest/transId/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="msisdn">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d3e</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/fns:addFnSMemberRequest/msisdn/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="orderID">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d3d</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getOrderID($msisdn,$startreqbe)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7d3c" name="GetEnvironmentProperties">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d3b</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerHost()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d3a</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">if(fn:contains($OSBHostname,'.'))then fn:substring-before($OSBHostname,'.') else $OSBHostname</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBIPAddress">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d39</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerIPAddress()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7d38" name="ProcessInput">
+                <con:context>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="del" namespace="http://indosatooredoo.com/ngssp/schemas/DeleteOffer/"/>
+                    <con1:userNsDecl prefix="fns" namespace="http://www.example.org/FnSAction/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="ind" namespace="http://www.indosatooredoo.com"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/formatDateTime"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d37</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<methodCall>
+<methodName>UpdateFaFList</methodName>
+<params>
+<param>
+<value>
+<struct>
+<member>
+<name>originNodeType</name>
+<value>
+<string>EXT</string>
+</value>
+</member>
+<member>
+<name>originHostName</name>
+<value>
+<string>{$OSBHostname}</string>
+</value>
+</member>
+<member>
+<name>originTransactionID</name>
+<value>
+<string>{$orderID}</string>
+</value>
+</member>
+<member>
+<name>originTimeStamp</name>
+<value>
+<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
+</value>
+</member>
+<member>
+<name>subscriberNumberNAI</name>
+<value>
+<i4>1</i4>
+</value>
+</member>
+<member>
+<name>subscriberNumber</name>
+<value>
+<string>{$msisdn}</string>
+</value>
+</member>
+<member>
+<name>fafAction</name>
+<value>
+<string>ADD</string>
+</value>
+</member>
+<member>
+<name>fafInformation</name>
+<value>
+<struct>
+<member>
+<name>fafNumber</name>
+<value>
+<string>{$body/fns:addFnSMemberRequest/fnsNumber/text()}</string>
+</value>
+</member>
+<member>
+<name>owner</name>
+<value>
+<string>Subscriber</string>
+</value>
+</member>
+<member>
+<name>fafIndicator</name>
+<value>
+<i4>99</i4>
+</value>
+</member>
+</struct>
+</value>
+</member>
+</struct>
+</value>
+</param>
+</params>
+</methodCall>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7d36" name="Log Req BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d35</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con1:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d34</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>REQ_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - AddMember</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage>{$body}</RequestMessage>
+<ResponseMessage></ResponseMessage>
+<StatusCode></StatusCode>
+<StatusDescription></StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-a0a67ab.N3c5540f4.0.15de62d0852.N7d33" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7d32" name="Initialisation">
+                <con:context/>
+                <con:actions>
+                    <con5:assign varName="startresbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d31</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7d30" name="Transform Status Code">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="adap" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterErrorMapping" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorCode"/>
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorDesc"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bestatus">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d2f</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">let $count := count($body/methodResponse/fault)
+return 
+if ($count eq 0) then
+let $status := $body/methodResponse/params/param/value/struct/member[name="responseCode"]/value/i4/text()
+return $status
+else
+let $status := $body/methodResponse/fault/value/struct/member[name="faultCode"]/value/i4/text()
+return $status</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bedesc">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d2e</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/methodResponse/fault/value/struct/member[name="faultString"]/value/string/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="festatus">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d2d</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorCode($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="fedesc">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d2c</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorDesc($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7d2b" name="ProcessOutput">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/normaliseDAValue"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace contents-only="true" varName="body">
+                        <con1:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d2a</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<fns:addFnSMemberResponse xmlns:fns="http://www.example.org/FnSAction/">
+<result>{$festatus}</result>
+<description>{$fedesc}</description>
+<notAllowedDescription>
+{
+	if(exists($body/methodResponse/params/param/value/struct/member[name="notAllowedReason"]/value/i4/text())) then
+	let $notAllowedStatus := $body/methodResponse/params/param/value/struct/member[name="notAllowedReason"]/value/i4/text()
+	return
+	if($notAllowedStatus eq '1') then
+	let $response := 'Wrong number format'
+	return $response
+	else if($notAllowedStatus eq '2') then
+	let $response:= 'Wrong number of digits'
+	return $response
+	else if($notAllowedStatus eq '3') then
+	let $response := 'Number part of black list'
+	return $response
+	else if($notAllowedStatus eq '4') then
+	let $response := 'Too many changes already performed for this period'
+	return $response
+	else if($notAllowedStatus eq '5') then
+	let $response := 'On total maximum of allowed FaF numbers'
+	return $response
+	else if($notAllowedStatus eq '6') then
+	let $response := 'On maximum of allowed FaF numbers for this number type'
+	return $response
+	else if($notAllowedStatus eq '7') then
+	let $response := 'FaF number already exist'
+	return $response
+	else if($notAllowedStatus eq '8') then
+	let $response := 'Service Class change not allowed'
+	return $response
+	else if($notAllowedStatus eq '9') then
+	let $response := 'Offer for FaF number not allowed in destination Service Class'
+	return $response
+	else if($notAllowedStatus eq '10') then
+	let $response := 'FaF indicator not allowed in Service Class'
+	return $response
+	else
+	let $response := ''
+	return $response
+	else
+	''
+}
+</notAllowedDescription>
+</fns:addFnSMemberResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7d29" name="Log Res BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d28</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7d27</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startresbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Add Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$body}</ResponseMessage>
+<StatusCode>{$festatus}</StatusCode>
+<StatusDescription>{$fedesc}</StatusDescription>
+<BackendStatusCode>{$bestatus}</BackendStatusCode>
+<BackendStatusDescription>{$bedesc}</BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a0a67ab.N3c5540f4.0.15de62d0852.N7b59">
+            <con:stage id="_StageId-a0a67ab.N3c5540f4.0.15de62d0852.N7b1d" name="handling backend" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con5="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7b1c</con6:id>
+                        <con1:location>
+                            <con3:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con3:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<fns:addFnSMemberResponse xmlns:fns="http://www.example.org/FnSAction/">
+<result>99</result>
+<description>Backend Not Available</description>
+</fns:addFnSMemberResponse>]]></con6:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:route xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7b1b</con6:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7b1a</con6:id>
+                                <con1:location>
+                                    <con2:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Add Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$fault}</ResponseMessage>
+<StatusCode>99</StatusCode>
+<StatusDescription>Backend Not Available</StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con6:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                    <con3:reply isError="true" xmlns:con6="http://www.bea.com/wli/sb/stages/config">
+                        <con6:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7b19</con6:id>
+                    </con3:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-a0a6742.748b50e2.0.15de77e6d00.N7f34" errorHandler="error-a0a6742.748b50e2.0.15de77e6d00.N7f25" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f33" name="Initialisation">
+                <con:context>
+                    <con1:userNsDecl prefix="get6" namespace="http://www.example.org/GetINAllInfo2/"/>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulators/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="fns" namespace="http://www.example.org/FnSAction/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://www.example.org/GetActDate/"/>
+                    <con1:userNsDecl prefix="get3" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get4" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con1:userNsDecl prefix="get5" namespace="http://www.example.org/GetINAllInfo/"/>
+                    <con1:userNsDecl prefix="inc" namespace="http://xmlns.oracle.com/INCheckCurrentSubsription"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getOrderID"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con5:assign varName="startreqbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f32</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                    <con2:assign varName="transID">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f31</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/fns:modifyFnSMemberRequest/transId/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="msisdn">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f30</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/fns:modifyFnSMemberRequest/msisdn/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="orderID">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f2f</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getOrderID($msisdn,$startreqbe)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f2e" name="GetEnvironmentProperties">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f2d</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerHost()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f2c</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">if(fn:contains($OSBHostname,'.'))then fn:substring-before($OSBHostname,'.') else $OSBHostname</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBIPAddress">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f2b</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerIPAddress()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f2a" name="ProcessInput">
+                <con:context>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="del" namespace="http://indosatooredoo.com/ngssp/schemas/DeleteOffer/"/>
+                    <con1:userNsDecl prefix="fns" namespace="http://www.example.org/FnSAction/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="ind" namespace="http://www.indosatooredoo.com"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/formatDateTime"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f29</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<methodCall>
+<methodName>UpdateFaFList</methodName>
+<params>
+<param>
+<value>
+<struct>
+<member>
+<name>originNodeType</name>
+<value>
+<string>EXT</string>
+</value>
+</member>
+<member>
+<name>originHostName</name>
+<value>
+<string>{$OSBHostname}</string>
+</value>
+</member>
+<member>
+<name>originTransactionID</name>
+<value>
+<string>{$orderID}</string>
+</value>
+</member>
+<member>
+<name>originTimeStamp</name>
+<value>
+<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
+</value>
+</member>
+<member>
+<name>subscriberNumberNAI</name>
+<value>
+<i4>1</i4>
+</value>
+</member>
+<member>
+<name>subscriberNumber</name>
+<value>
+<string>{$msisdn}</string>
+</value>
+</member>
+<member>
+<name>fafAction</name>
+<value>
+<string>ADD</string>
+</value>
+</member>
+<member>
+<name>fafInformation</name>
+<value>
+<struct>
+<member>
+<name>fafNumber</name>
+<value>
+<string>{$body/fns:addFnSMemberRequest/fnsNumber/text()}</string>
+</value>
+</member>
+<member>
+<name>owner</name>
+<value>
+<string>Subscriber</string>
+</value>
+</member>
+<member>
+<name>fafIndicator</name>
+<value>
+<i4>99</i4>
+</value>
+</member>
+</struct>
+</value>
+</member>
+</struct>
+</value>
+</param>
+</params>
+</methodCall>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f28" name="Log Req BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f27</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con1:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f26</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>REQ_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Modify Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage>{$body}</RequestMessage>
+<ResponseMessage></ResponseMessage>
+<StatusCode></StatusCode>
+<StatusDescription></StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a0a6742.748b50e2.0.15de77e6d00.N7f25">
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f24" name="handling backend" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con5="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f23</con6:id>
+                        <con1:location>
+                            <con3:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con3:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<fns:addFnSMemberResponse xmlns:fns="http://www.example.org/FnSAction/">
+<result>99</result>
+<description>Backend Not Available</description>
+</fns:addFnSMemberResponse>]]></con6:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:route xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f22</con6:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f21</con6:id>
+                                <con1:location>
+                                    <con2:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Modify Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$fault}</ResponseMessage>
+<StatusCode>99</StatusCode>
+<StatusDescription>Backend Not Available</StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con6:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                    <con3:reply isError="true" xmlns:con6="http://www.bea.com/wli/sb/stages/config">
+                        <con6:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f20</con6:id>
+                    </con3:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-a0a6742.748b50e2.0.15de77e6d00.N7f1f" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f1e" name="Initialisation">
+                <con:context/>
+                <con:actions>
+                    <con5:assign varName="startresbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f1d</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f1c" name="Transform Status Code">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="adap" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterErrorMapping" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorCode"/>
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorDesc"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bestatus">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f1b</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">let $count := count($body/methodResponse/fault)
+return 
+if ($count eq 0) then
+let $status := $body/methodResponse/params/param/value/struct/member[name="responseCode"]/value/i4/text()
+return $status
+else
+let $status := $body/methodResponse/fault/value/struct/member[name="faultCode"]/value/i4/text()
+return $status</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bedesc">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f1a</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/methodResponse/fault/value/struct/member[name="faultString"]/value/string/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="festatus">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f19</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorCode($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="fedesc">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f18</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorDesc($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f17" name="ProcessOutput">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/normaliseDAValue"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace contents-only="true" varName="body">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f16</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<fns:modifyFnSMemberResponse xmlns:fns="http://www.example.org/FnSAction/">
+<result>1</result>
+<description>Other Error</description>
+</fns:modifyFnSMemberResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7f15" name="Log Res BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f14</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7f13</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startresbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Modify Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$body}</ResponseMessage>
+<StatusCode>{$festatus}</StatusCode>
+<StatusDescription>{$fedesc}</StatusDescription>
+<BackendStatusCode>{$bestatus}</BackendStatusCode>
+<BackendStatusDescription>{$bedesc}</BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-a0a6742.748b50e2.0.15de77e6d00.N7dff" errorHandler="error-a0a6742.748b50e2.0.15de77e6d00.N7df0" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7dfe" name="Initialisation">
+                <con:context>
+                    <con1:userNsDecl prefix="get6" namespace="http://www.example.org/GetINAllInfo2/"/>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulators/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="fns" namespace="http://www.example.org/FnSAction/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://www.example.org/GetActDate/"/>
+                    <con1:userNsDecl prefix="get3" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get4" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con1:userNsDecl prefix="get5" namespace="http://www.example.org/GetINAllInfo/"/>
+                    <con1:userNsDecl prefix="inc" namespace="http://xmlns.oracle.com/INCheckCurrentSubsription"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getOrderID"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con5:assign varName="startreqbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7dfd</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                    <con2:assign varName="transID">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7dfc</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/fns:removeFnSMemberRequest/transId/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="msisdn">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7dfb</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/fns:removeFnSMemberRequest/msisdn/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="orderID">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7dfa</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getOrderID($msisdn,$startreqbe)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7df9" name="GetEnvironmentProperties">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7df8</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerHost()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7df7</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">if(fn:contains($OSBHostname,'.'))then fn:substring-before($OSBHostname,'.') else $OSBHostname</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBIPAddress">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7df6</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerIPAddress()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7df5" name="ProcessInput">
+                <con:context>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="del" namespace="http://indosatooredoo.com/ngssp/schemas/DeleteOffer/"/>
+                    <con1:userNsDecl prefix="fns" namespace="http://www.example.org/FnSAction/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="ind" namespace="http://www.indosatooredoo.com"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/formatDateTime"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7df4</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<methodCall>
+<methodName>UpdateFaFList</methodName>
+<params>
+<param>
+<value>
+<struct>
+<member>
+<name>originNodeType</name>
+<value>
+<string>EXT</string>
+</value>
+</member>
+<member>
+<name>originHostName</name>
+<value>
+<string>{$OSBHostname}</string>
+</value>
+</member>
+<member>
+<name>originTransactionID</name>
+<value>
+<string>{$orderID}</string>
+</value>
+</member>
+<member>
+<name>originTimeStamp</name>
+<value>
+<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
+</value>
+</member>
+<member>
+<name>subscriberNumberNAI</name>
+<value>
+<i4>1</i4>
+</value>
+</member>
+<member>
+<name>subscriberNumber</name>
+<value>
+<string>{$msisdn}</string>
+</value>
+</member>
+<member>
+<name>fafAction</name>
+<value>
+<string>DELETE</string>
+</value>
+</member>
+<member>
+<name>fafInformation</name>
+<value>
+<struct>
+<member>
+<name>fafNumber</name>
+<value>
+<string>{$body/fns:removeFnSMemberRequest/fnsNumber/text()}</string>
+</value>
+</member>
+<member>
+<name>owner</name>
+<value>
+<string>Subscriber</string>
+</value>
+</member>
+<member>
+<name>fafIndicator</name>
+<value>
+<i4>99</i4>
+</value>
+</member>
+</struct>
+</value>
+</member>
+</struct>
+</value>
+</param>
+</params>
+</methodCall>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7df3" name="Log Req BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7df2</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con1:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7df1</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>REQ_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Remove Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage>{$body}</RequestMessage>
+<ResponseMessage></ResponseMessage>
+<StatusCode></StatusCode>
+<StatusDescription></StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a0a6742.748b50e2.0.15de77e6d00.N7df0">
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7def" name="handling backend" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con5="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7dee</con6:id>
+                        <con1:location>
+                            <con3:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con3:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<fns:addFnSMemberResponse xmlns:fns="http://www.example.org/FnSAction/">
+<result>99</result>
+<description>Backend Not Available</description>
+</fns:addFnSMemberResponse>]]></con6:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:route xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7ded</con6:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7dec</con6:id>
+                                <con1:location>
+                                    <con2:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Remove Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$fault}</ResponseMessage>
+<StatusCode>99</StatusCode>
+<StatusDescription>Backend Not Available</StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con6:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                    <con3:reply isError="true" xmlns:con6="http://www.bea.com/wli/sb/stages/config">
+                        <con6:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7deb</con6:id>
+                    </con3:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-a0a6742.748b50e2.0.15de77e6d00.N7dea" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7de9" name="Initialisation">
+                <con:context/>
+                <con:actions>
+                    <con5:assign varName="startresbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7de8</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7de7" name="Transform Status Code">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="adap" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterErrorMapping" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorCode"/>
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorDesc"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bestatus">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7de6</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">let $count := count($body/methodResponse/fault)
+return 
+if ($count eq 0) then
+let $status := $body/methodResponse/params/param/value/struct/member[name="responseCode"]/value/i4/text()
+return $status
+else
+let $status := $body/methodResponse/fault/value/struct/member[name="faultCode"]/value/i4/text()
+return $status</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bedesc">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7de5</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/methodResponse/fault/value/struct/member[name="faultString"]/value/string/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="festatus">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7de4</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorCode($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="fedesc">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7de3</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorDesc($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7de2" name="ProcessOutput">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/normaliseDAValue"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace contents-only="true" varName="body">
+                        <con1:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7de1</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<fns:removeFnSMemberResponse xmlns:fns="http://www.example.org/FnSAction/">
+<result>{$festatus}</result>
+<description>{$fedesc}</description>
+<notAllowedDescription>
+{
+	if(exists($body/methodResponse/params/param/value/struct/member[name="notAllowedReason"]/value/i4/text())) then
+	let $notAllowedStatus := $body/methodResponse/params/param/value/struct/member[name="notAllowedReason"]/value/i4/text()
+	return
+	if($notAllowedStatus eq '1') then
+	let $response := 'Wrong number format'
+	return $response
+	else if($notAllowedStatus eq '2') then
+	let $response:= 'Wrong number of digits'
+	return $response
+	else if($notAllowedStatus eq '3') then
+	let $response := 'Number part of black list'
+	return $response
+	else if($notAllowedStatus eq '4') then
+	let $response := 'Too many changes already performed for this period'
+	return $response
+	else if($notAllowedStatus eq '5') then
+	let $response := 'On total maximum of allowed FaF numbers'
+	return $response
+	else if($notAllowedStatus eq '6') then
+	let $response := 'On maximum of allowed FaF numbers for this number type'
+	return $response
+	else if($notAllowedStatus eq '7') then
+	let $response := 'FaF number already exist'
+	return $response
+	else if($notAllowedStatus eq '8') then
+	let $response := 'Service Class change not allowed'
+	return $response
+	else if($notAllowedStatus eq '9') then
+	let $response := 'Offer for FaF number not allowed in destination Service Class'
+	return $response
+	else if($notAllowedStatus eq '10') then
+	let $response := 'FaF indicator not allowed in Service Class'
+	return $response
+	else
+	let $response := ''
+	return $response
+	else
+	''
+}
+</notAllowedDescription>
+</fns:removeFnSMemberResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6742.748b50e2.0.15de77e6d00.N7de0" name="Log Res BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7ddf</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a6742.748b50e2.0.15de77e6d00.N7dde</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startresbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Remove Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$body}</ResponseMessage>
+<StatusCode>{$festatus}</StatusCode>
+<StatusDescription>{$fedesc}</StatusDescription>
+<BackendStatusCode>{$bestatus}</BackendStatusCode>
+<BackendStatusDescription>{$bedesc}</BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-a0a66dd.N26bcc870.0.15e275718f3.N7f03" errorHandler="error-a0a66dd.N26bcc870.0.15e275718f3.N7ef4" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7f02" name="Initialisation">
+                <con:context>
+                    <con1:userNsDecl prefix="get6" namespace="http://www.example.org/GetINAllInfo2/"/>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulators/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="fns" namespace="http://www.example.org/FnSAction/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://www.example.org/GetActDate/"/>
+                    <con1:userNsDecl prefix="get3" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get4" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con1:userNsDecl prefix="get5" namespace="http://www.example.org/GetINAllInfo/"/>
+                    <con1:userNsDecl prefix="inc" namespace="http://xmlns.oracle.com/INCheckCurrentSubsription"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getOrderID"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con5:assign varName="startreqbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7f01</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                    <con2:assign varName="transID">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7f00</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/fns:removeAllFnSMemberRequest/transId/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="msisdn">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7eff</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/fns:removeAllFnSMemberRequest/msisdn/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="orderID">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7efe</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getOrderID($msisdn,$startreqbe)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7efd" name="GetEnvironmentProperties">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7efc</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerHost()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7efb</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">if(fn:contains($OSBHostname,'.'))then fn:substring-before($OSBHostname,'.') else $OSBHostname</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBIPAddress">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7efa</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerIPAddress()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7ef9" name="ProcessInput">
+                <con:context>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="del" namespace="http://indosatooredoo.com/ngssp/schemas/DeleteOffer/"/>
+                    <con1:userNsDecl prefix="fns" namespace="http://www.example.org/FnSAction/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="ind" namespace="http://www.indosatooredoo.com"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/formatDateTime"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ef8</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<methodCall>
+<methodName>UpdateFaFList</methodName>
+<params>
+<param>
+<value>
+<struct>
+<member>
+<name>originNodeType</name>
+<value>
+<string>EXT</string>
+</value>
+</member>
+<member>
+<name>originHostName</name>
+<value>
+<string>{$OSBHostname}</string>
+</value>
+</member>
+<member>
+<name>originTransactionID</name>
+<value>
+<string>{$orderID}</string>
+</value>
+</member>
+<member>
+<name>originTimeStamp</name>
+<value>
+<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
+</value>
+</member>
+<member>
+<name>subscriberNumberNAI</name>
+<value>
+<i4>1</i4>
+</value>
+</member>
+<member>
+<name>subscriberNumber</name>
+<value>
+<string>{$msisdn}</string>
+</value>
+</member>
+<member>
+<name>fafAction</name>
+<value>
+<string>DELETE</string>
+</value>
+</member>
+<member>
+<name>fafInformation</name>
+<value>
+<struct>
+<member>
+<name>fafNumber</name>
+<value>
+<string>{$body/fns:removeFnSMemberRequest/fnsNumber/text()}</string>
+</value>
+</member>
+<member>
+<name>owner</name>
+<value>
+<string>Subscriber</string>
+</value>
+</member>
+<member>
+<name>fafIndicator</name>
+<value>
+<i4>99</i4>
+</value>
+</member>
+</struct>
+</value>
+</member>
+</struct>
+</value>
+</param>
+</params>
+</methodCall>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7ef7" name="Log Req BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ef6</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con1:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ef5</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>REQ_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Remove All Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage>{$body}</RequestMessage>
+<ResponseMessage></ResponseMessage>
+<StatusCode></StatusCode>
+<StatusDescription></StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a0a66dd.N26bcc870.0.15e275718f3.N7ef4">
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7ef3" name="handling backend" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con5="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ef2</con6:id>
+                        <con1:location>
+                            <con3:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con3:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<fns:addFnSMemberResponse xmlns:fns="http://www.example.org/FnSAction/">
+<result>99</result>
+<description>Backend Not Available</description>
+</fns:addFnSMemberResponse>]]></con6:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:route xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ef1</con6:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ef0</con6:id>
+                                <con1:location>
+                                    <con2:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Remove All Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$fault}</ResponseMessage>
+<StatusCode>99</StatusCode>
+<StatusDescription>Backend Not Available</StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con6:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                    <con3:reply isError="true" xmlns:con6="http://www.bea.com/wli/sb/stages/config">
+                        <con6:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7eef</con6:id>
+                    </con3:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-a0a66dd.N26bcc870.0.15e275718f3.N7eee" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7eed" name="Initialisation">
+                <con:context/>
+                <con:actions>
+                    <con5:assign varName="startresbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7eec</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7eeb" name="Transform Status Code">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="adap" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterErrorMapping" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorCode"/>
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorDesc"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bestatus">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7eea</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">let $count := count($body/methodResponse/fault)
+return 
+if ($count eq 0) then
+let $status := $body/methodResponse/params/param/value/struct/member[name="responseCode"]/value/i4/text()
+return $status
+else
+let $status := $body/methodResponse/fault/value/struct/member[name="faultCode"]/value/i4/text()
+return $status</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bedesc">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ee9</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/methodResponse/fault/value/struct/member[name="faultString"]/value/string/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="festatus">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ee8</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorCode($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="fedesc">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ee7</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorDesc($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7ee6" name="ProcessOutput">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/normaliseDAValue"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace contents-only="true" varName="body">
+                        <con1:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ee5</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<fns:removeAllFnSMemberResponse xmlns:fns="http://www.example.org/FnSAction/">
+<result>1</result>
+<description>Other Error</description>
+</fns:removeAllFnSMemberResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a66dd.N26bcc870.0.15e275718f3.N7ee4" name="Log Res BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ee3</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a66dd.N26bcc870.0.15e275718f3.N7ee2</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startresbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFUpdate - Remove All Member</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$body}</ResponseMessage>
+<StatusCode>{$festatus}</StatusCode>
+<StatusDescription>{$fedesc}</StatusDescription>
+<BackendStatusCode>{$bestatus}</BackendStatusCode>
+<BackendStatusDescription>{$bedesc}</BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" id="_FlowId-a0a67ab.N3c5540f4.0.15de62d0852.N8000" name="Select Operation">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="addFnSMember">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Add Member Main" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con:request>request-a0a67ab.N3c5540f4.0.15de62d0852.N7d42</con:request>
+                                <con:response>response-a0a67ab.N3c5540f4.0.15de62d0852.N7d33</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="Route to BS">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7f62</con2:id>
+                                        <con1:service ref="AIRAdapter/BusinessServices/UpdateFaFList" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:outboundTransform>
+                                            <con3:transport-headers copy-all="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7f61</con2:id>
+                                                <con3:header-set>outbound-request</con3:header-set>
+                                                <con3:header value="expression" name="Content-Type">
+                                                    <con2:xqueryText>'text/xml'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="User-Agent">
+                                                    <con2:xqueryText>'EXT/5.0/1.0'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="Connection">
+                                                    <con2:xqueryText>'Keep-Alive, TE'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="Accept-Encoding">
+                                                    <con2:xqueryText>'gzip, x-gzip, compress, x-compress'</con2:xqueryText>
+                                                </con3:header>
+                                            </con3:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="modifyFnSMember">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Modify Member Main" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con:request>request-a0a6742.748b50e2.0.15de77e6d00.N7f34</con:request>
+                                <con:response>response-a0a6742.748b50e2.0.15de77e6d00.N7f1f</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="Route to BS 2">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7ec6</con2:id>
+                                        <con1:service ref="AIRAdapter/BusinessServices/UpdateFaFList" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:outboundTransform>
+                                            <con3:transport-headers copy-all="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7ec5</con2:id>
+                                                <con3:header-set>outbound-request</con3:header-set>
+                                                <con3:header value="expression" name="Content-Type">
+                                                    <con2:xqueryText>'text/xml'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="User-Agent">
+                                                    <con2:xqueryText>'EXT/5.0/1.0'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="Connection">
+                                                    <con2:xqueryText>'Keep-Alive, TE'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="Accept-Encoding">
+                                                    <con2:xqueryText>'gzip, x-gzip, compress, x-compress'</con2:xqueryText>
+                                                </con3:header>
+                                            </con3:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="removeFnSMember">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Remove Member Main" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con:request>request-a0a6742.748b50e2.0.15de77e6d00.N7dff</con:request>
+                                <con:response>response-a0a6742.748b50e2.0.15de77e6d00.N7dea</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="Route to BS 3">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7e90</con2:id>
+                                        <con1:service ref="AIRAdapter/BusinessServices/UpdateFaFList" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:outboundTransform>
+                                            <con3:transport-headers copy-all="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-a0a67ab.N3c5540f4.0.15de62d0852.N7e8f</con2:id>
+                                                <con3:header-set>outbound-request</con3:header-set>
+                                                <con3:header value="expression" name="Content-Type">
+                                                    <con2:xqueryText>'text/xml'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="User-Agent">
+                                                    <con2:xqueryText>'EXT/5.0/1.0'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="Connection">
+                                                    <con2:xqueryText>'Keep-Alive, TE'</con2:xqueryText>
+                                                </con3:header>
+                                                <con3:header value="expression" name="Accept-Encoding">
+                                                    <con2:xqueryText>'gzip, x-gzip, compress, x-compress'</con2:xqueryText>
+                                                </con3:header>
+                                            </con3:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="removeAllFnSMember">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Remove All Member Main" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con:request>request-a0a66dd.N26bcc870.0.15e275718f3.N7f03</con:request>
+                                <con:response>response-a0a66dd.N26bcc870.0.15e275718f3.N7eee</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

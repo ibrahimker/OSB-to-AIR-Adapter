@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/FnSAction/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="FnSAction" targetNamespace="http://www.example.org/FnSAction/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/FnSAction/">
+      <!--
+      <xsd:element name="FnSMemberRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+            <xsd:element name="fnsNumber" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="FnSMemberResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      -->  
+      <xsd:element name="addFnSMemberRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+            <xsd:element name="fnsNumber" type="xsd:string"/>
+            <xsd:element name="chargingIndicator" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addFnSMemberResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="modifyFnSMemberRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+              <xsd:element name="msisdn" type="xsd:string"/>
+              <xsd:element name="oldFnsNumber" type="xsd:string"/>
+              <xsd:element name="newFnsNumber" type="xsd:string"/>
+              <xsd:element name="chargingIndicator" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="modifyFnSMemberResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="removeFnSMemberRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+              <xsd:element name="msisdn" type="xsd:string"/>
+              <xsd:element name="fnsNumber" type="xsd:string"/>
+              <xsd:element name="chargingIndicator" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="removeFnSMemberResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="removeAllFnSMemberRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+              <xsd:element name="msisdn" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="removeAllFnSMemberResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <!-- 
+  <wsdl:message name="FnSMemberRequest">
+    <wsdl:part element="tns:FnSMemberRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="FnSMemberResponse">
+    <wsdl:part element="tns:FnSMemberResponse" name="parameters"/>
+  </wsdl:message>
+  --> 
+  <wsdl:message name="addFnSMemberRequest">
+    <wsdl:part element="tns:addFnSMemberRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="addFnSMemberResponse">
+    <wsdl:part element="tns:addFnSMemberResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="modifyFnSMemberRequest">
+    <wsdl:part name="parameters" element="tns:modifyFnSMemberRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="modifyFnSMemberResponse">
+    <wsdl:part name="parameters" element="tns:modifyFnSMemberResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeFnSMemberRequest">
+    <wsdl:part name="parameters" element="tns:removeFnSMemberRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeFnSMemberResponse">
+    <wsdl:part name="parameters" element="tns:removeFnSMemberResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllFnSMemberRequest">
+    <wsdl:part name="parameters" element="tns:removeAllFnSMemberRequest"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeAllFnSMemberResponse">
+    <wsdl:part name="parameters" element="tns:removeAllFnSMemberResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="FnSAction">
+    <wsdl:operation name="addFnSMember">
+      <wsdl:input message="tns:addFnSMemberRequest"/>
+      <wsdl:output message="tns:addFnSMemberResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="modifyFnSMember">
+      <wsdl:input message="tns:modifyFnSMemberRequest"></wsdl:input>
+      <wsdl:output message="tns:modifyFnSMemberResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeFnSMember">
+      <wsdl:input message="tns:removeFnSMemberRequest"></wsdl:input>
+      <wsdl:output message="tns:removeFnSMemberResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllFnSMember">
+      <wsdl:input message="tns:removeAllFnSMemberRequest"></wsdl:input>
+      <wsdl:output message="tns:removeAllFnSMemberResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <!-- 
+  <wsdl:portType name="FnSAction">
+    <wsdl:operation name="addFnSMember">
+      <wsdl:input message="tns:FnSMemberRequest"/>
+      <wsdl:output message="tns:FnSMemberResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="modifyFnSMember">
+      <wsdl:input message="tns:FnSMemberRequest"></wsdl:input>
+      <wsdl:output message="tns:FnSMemberResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeFnSMember">
+      <wsdl:input message="tns:FnSMemberRequest"></wsdl:input>
+      <wsdl:output message="tns:FnSMemberResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllFnSMember">
+      <wsdl:input message="tns:FnSMemberRequest"></wsdl:input>
+      <wsdl:output message="tns:FnSMemberResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  -->
+  <wsdl:binding name="FnSActionSOAP" type="tns:FnSAction">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addFnSMember">
+      <soap:operation soapAction="http://www.example.org/FnSAction/addFnSMember"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="modifyFnSMember">
+      <soap:operation soapAction="http://www.example.org/FnSAction/modifyFnSMember"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeFnSMember">
+      <soap:operation soapAction="http://www.example.org/FnSAction/removeFnSMember"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeAllFnSMember">
+      <soap:operation soapAction="http://www.example.org/FnSAction/removeAllFnSMember"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FnSAction">
+    <wsdl:port binding="tns:FnSActionSOAP" name="FnSActionSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

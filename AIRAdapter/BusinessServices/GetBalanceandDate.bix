@@ -7,6 +7,7 @@ For a product private (instantiated) DA, the GetBalanceAndDate request should be
         <con:binding type="abstract XML"/>
         <oper:operations enabled="true">
             <oper:throttling enabled="false"/>
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
             <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
         </oper:operations>
         <con:ws-policy>
@@ -19,29 +20,14 @@ For a product private (instantiated) DA, the GetBalanceAndDate request should be
     <con:endpointConfig>
         <tran:provider-id>http</tran:provider-id>
         <tran:inbound>false</tran:inbound>
-        <tran:URI weight="1">
-            <env:value>http://10.201.4.208:10011/Air</env:value>
+        <tran:URI>
+            <env:value>http://10.34.22.200:10011/Air</env:value>
         </tran:URI>
-        <tran:URI weight="3">
-            <env:value>http://10.201.63.99:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="3">
-            <env:value>http://10.201.32.21:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="1">
-            <env:value>http://10.201.4.210:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="1">
-            <env:value>http://10.201.4.212:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="3">
-            <env:value>http://10.201.60.48:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="3">
-            <env:value>http://10.201.60.50:10011/Air</env:value>
+        <tran:URI>
+            <env:value>http://10.34.22.201:10011/Air</env:value>
         </tran:URI>
         <tran:outbound-properties>
-            <tran:load-balancing-algorithm>weighted-random</tran:load-balancing-algorithm>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
             <tran:retry-count>0</tran:retry-count>
             <tran:retry-interval>30</tran:retry-interval>
             <tran:retry-application-errors>false</tran:retry-application-errors>
@@ -63,4 +49,20 @@ For a product private (instantiated) DA, the GetBalanceAndDate request should be
             </http:compression>
         </tran:provider-specific>
     </con:endpointConfig>
+    <aler:alertRules xmlns:aler="http://xmlns.oracle.com/servicebus/monitoring/alert">
+        <aler:alertRule enabled="true" name="ResponseTime">
+            <aler:frequency>every-time</aler:frequency>
+            <aler:severity>normal</aler:severity>
+            <aler:stopProcessing>false</aler:stopProcessing>
+            <aler:condition aggregation-interval="5">
+                <con2:monCondExpr xmlns:con2="http://xmlns.oracle.com/servicebus/monitoring/alert/condition">
+                    <con2:function>max</con2:function>
+                    <con2:lhs>Transport.response-time</con2:lhs>
+                    <con2:operator>></con2:operator>
+                    <con2:rhs>20</con2:rhs>
+                </con2:monCondExpr>
+            </aler:condition>
+            <aler:alertDestination ref="AIRAdapter/AIRAlertService"/>
+        </aler:alertRule>
+    </aler:alertRules>
 </con:businessServiceEntry>

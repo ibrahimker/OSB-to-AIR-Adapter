@@ -1,0 +1,86 @@
+<definitions 
+   name="INFafSubs"
+   targetNamespace="http://xmlns.oracle.com/INFafSubs"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:tns="http://xmlns.oracle.com/INFafSubs"
+   xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   > 
+   <types> 
+    <schema attributeFormDefault="unqualified"
+     elementFormDefault="qualified"
+     targetNamespace="http://xmlns.oracle.com/INFafSubs"
+     xmlns="http://www.w3.org/2001/XMLSchema">
+     <element name="INFafSubsProcessRequest">
+        <complexType>
+           <sequence>
+              <element name="msisdn" type="string"/>
+              <element name="transId" type="string"/>                                
+          </sequence>
+      </complexType>
+  </element>
+  <element name="INFafSubsProcessResponse">
+    <complexType>
+       <sequence>
+         <element name="result" type="string"/>
+         <element name="FAFs" type="tns:Groups">
+         </element>		                  
+     </sequence>
+ </complexType>
+</element>
+
+<complexType name="Groups">
+    <sequence>
+       <element name="Group" maxOccurs="unbounded" minOccurs="1" type="tns:GroupType">
+       </element>
+   </sequence>
+</complexType>	
+
+<complexType name="GroupType" >
+   <sequence>
+      <element name="ID" type="string"></element>
+      <element name="Members" type="tns:MsisdnType"></element>
+  </sequence>
+</complexType>
+<complexType name="MsisdnType">
+    <sequence>
+       <element name="Msisdn" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+   </sequence>
+</complexType>			
+</schema> 
+</types> 
+<message name="INFafSubsRequestMessage"> 
+    <part name="payload" element="tns:INFafSubsProcessRequest"/> 
+</message> 
+<message name="INFafSubsResponseMessage"> 
+    <part name="payload" element="tns:INFafSubsProcessResponse"/> 
+</message> 
+<portType name="INFafSubs"> 
+    <operation name="process"> 
+        <input message="tns:INFafSubsRequestMessage"/> 
+        <output message="tns:INFafSubsResponseMessage"/> 
+    </operation> 
+</portType> 
+<binding name="INFafSubsBinding" type="tns:INFafSubs"> 
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/> 
+    <operation name="process"> 
+        <soap:operation style="document" soapAction="process"/> 
+        <input> 
+            <soap:body use="literal"/> 
+        </input> 
+        <output> 
+            <soap:body use="literal"/> 
+        </output> 
+    </operation> 
+</binding> 
+<service name="INFafSubs"> 
+    <port name="INFafSubsPort" binding="tns:INFafSubsBinding"> 
+        <soap:address location="http://localhost:8888/orabpel/default/INFafSubs/1.0"/> 
+    </port> 
+</service> 
+<plnk:partnerLinkType name="INFafSubs"> 
+    <plnk:role name="INFafSubsProvider"> 
+      <plnk:portType name="tns:INFafSubs"/> 
+  </plnk:role> 
+</plnk:partnerLinkType> 
+</definitions>

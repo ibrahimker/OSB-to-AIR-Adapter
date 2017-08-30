@@ -12,7 +12,9 @@
             </con:binding>
             <con:selector type="SOAP body"/>
         </ser:binding>
-        <oper:operations enabled="true"/>
+        <oper:operations enabled="true">
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
+        </oper:operations>
         <ser:ws-policy>
             <ser:binding-mode>no-policies</ser:binding-mode>
         </ser:ws-policy>

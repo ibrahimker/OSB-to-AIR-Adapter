@@ -4,6 +4,7 @@
         <con:binding type="abstract XML"/>
         <oper:operations enabled="true">
             <oper:throttling enabled="false"/>
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
             <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
         </oper:operations>
         <con:ws-policy>
@@ -16,29 +17,14 @@
     <con:endpointConfig>
         <tran:provider-id>http</tran:provider-id>
         <tran:inbound>false</tran:inbound>
-        <tran:URI weight="1">
-            <env:value>http://10.201.4.208:10011/Air</env:value>
+        <tran:URI>
+            <env:value>http://10.34.22.200:10011/Air</env:value>
         </tran:URI>
-        <tran:URI weight="3">
-            <env:value>http://10.201.63.99:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="3">
-            <env:value>http://10.201.32.21:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="1">
-            <env:value>http://10.201.4.210:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="1">
-            <env:value>http://10.201.4.212:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="3">
-            <env:value>http://10.201.60.48:10011/Air</env:value>
-        </tran:URI>
-        <tran:URI weight="3">
-            <env:value>http://10.201.60.50:10011/Air</env:value>
+        <tran:URI>
+            <env:value>http://10.34.22.201:10011/Air</env:value>
         </tran:URI>
         <tran:outbound-properties>
-            <tran:load-balancing-algorithm>weighted-random</tran:load-balancing-algorithm>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
             <tran:retry-count>0</tran:retry-count>
             <tran:retry-interval>30</tran:retry-interval>
             <tran:retry-application-errors>false</tran:retry-application-errors>
@@ -54,7 +40,7 @@
                 <http:chunked-streaming-mode>false</http:chunked-streaming-mode>
                 <http:session-sctikiness enabled="false" session-id-name="JSESSIONID"/>
             </http:outbound-properties>
-            <http:dispatch-policy>WorkManager-Backend-1-BS</http:dispatch-policy>
+            <http:dispatch-policy>SBDefaultResponseWorkManager</http:dispatch-policy>
             <http:compression>
                 <http:compression-support>false</http:compression-support>
             </http:compression>

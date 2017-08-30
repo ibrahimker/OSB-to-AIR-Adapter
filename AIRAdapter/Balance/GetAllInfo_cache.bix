@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:businessServiceEntry xmlns:con="http://xmlns.oracle.com/servicebus/business/config">
+    <con:coreEntry>
+        <con1:binding type="SOAP" xsi:type="con:SoapBindingType" isSoap12="false" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:con1="http://xmlns.oracle.com/servicebus/business/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <con:wsdl ref="AIRAdapter/Balance/GetAllInfo"/>
+            <con:port>
+                <con:name>GetINAllInfoSOAP</con:name>
+                <con:namespace>http://www.example.org/GetINAllInfo/</con:namespace>
+            </con:port>
+            <con:WSI-compliant>false</con:WSI-compliant>
+        </con1:binding>
+        <oper:operations enabled="true" xmlns:oper="http://xmlns.oracle.com/servicebus/business/operations">
+            <oper:throttling enabled="false"/>
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
+            <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
+        </oper:operations>
+        <con:ws-policy>
+            <ser:binding-mode xmlns:ser="http://www.bea.com/wli/sb/services">no-policies</ser:binding-mode>
+        </con:ws-policy>
+        <con:result-caching isSupported="true">
+            <con:expressionContext>
+                <con1:varNsDecl prefix="get" namespace="http://www.example.org/GetINAllInfo/" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+            </con:expressionContext>
+            <con:tokenExpression>
+                <con1:xqueryText xmlns:con1="http://www.bea.com/wli/sb/stages/config">$body/get:GetINAllInfoRequest/transId/text(),$body/get:GetINAllInfoRequest/msisdn/text()</con1:xqueryText>
+            </con:tokenExpression>
+            <con:ttlExpression source="request">
+                <con1:xqueryText xmlns:con1="http://www.bea.com/wli/sb/stages/config">'PT1M'</con1:xqueryText>
+            </con:ttlExpression>
+        </con:result-caching>
+        <con:xqConfiguration>
+            <ser:snippetVersion xmlns:ser="http://www.bea.com/wli/sb/services">1.0</ser:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:endpointConfig>
+        <tran:provider-id xmlns:tran="http://www.bea.com/wli/sb/transports">sb</tran:provider-id>
+        <tran:inbound xmlns:tran="http://www.bea.com/wli/sb/transports">false</tran:inbound>
+        <tran:URI xmlns:tran="http://www.bea.com/wli/sb/transports">
+            <env:value xmlns:env="http://www.bea.com/wli/config/env">sb://GetAllInfo_SB</env:value>
+        </tran:URI>
+        <tran:outbound-properties xmlns:tran="http://www.bea.com/wli/sb/transports">
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>30</tran:retry-interval>
+            <tran:retry-application-errors>false</tran:retry-application-errors>
+        </tran:outbound-properties>
+        <tran:provider-specific xsi:type="sb:SBEndPointConfiguration" xmlns:sb="http://www.bea.com/wli/sb/transports/sb" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <sb:dispatch-policy>SBDefaultResponseWorkManager</sb:dispatch-policy>
+            <sb:outbound-properties>
+                <sb:timeout>5</sb:timeout>
+            </sb:outbound-properties>
+        </tran:provider-specific>
+    </con:endpointConfig>
+</con:businessServiceEntry>

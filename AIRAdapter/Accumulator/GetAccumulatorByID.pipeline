@@ -8,6 +8,12 @@
                 <con:namespace>http://www.example.org/GetAccumulatorById/</con:namespace>
             </con:binding>
         </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:logging enabled="false" level="debug"/>
+            <oper:monitoring enabled="true" level="service" aggregationInterval="10"/>
+            <oper:reporting>false</oper:reporting>
+            <oper:pipeline-alerting enabled="false" level="normal"/>
+        </oper:operations>
         <con:xqConfiguration>
             <con:snippetVersion>1.0</con:snippetVersion>
         </con:xqConfiguration>
@@ -278,7 +284,13 @@ return $status</con3:xqueryText>
                             <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config"><![CDATA[<get:GetAccumulatorByIdResponse xmlns:get="http://www.example.org/GetAccumulatorById/">
 	<status>{$festatus}</status>
 	<description>{$fedesc}</description>
-	<acc>{$body/methodResponse/params/param/value/struct/member[name="accumulatorInformation"]/value/array/data/value/struct/member[name="accumulatorValue"]/value/i4/text()};{substring($body/methodResponse/params/param/value/struct/member[name="accumulatorInformation"]/value/array/data/value/struct/member[name="accumulatorStartDate"]/value/dateTime.iso8601/text(),1,8)};{substring($body/methodResponse/params/param/value/struct/member[name="accumulatorInformation"]/value/array/data/value/struct/member[name="accumulatorEndDate"]/value/dateTime.iso8601/text(),1,8)}</acc>
+	<acc>
+	{
+	if($bestatus='127')
+	then(fn:concat('0;',fn:substring(fn:replace(string(fn:current-dateTime()),'-',''),1,8),';99991231'))
+	else(fn:concat($body/methodResponse/params/param/value/struct/member[name="accumulatorInformation"]/value/array/data/value/struct/member[name="accumulatorValue"]/value/i4/text(),';',substring($body/methodResponse/params/param/value/struct/member[name="accumulatorInformation"]/value/array/data/value/struct/member[name="accumulatorStartDate"]/value/dateTime.iso8601/text(),1,8),';',substring($body/methodResponse/params/param/value/struct/member[name="accumulatorInformation"]/value/array/data/value/struct/member[name="accumulatorEndDate"]/value/dateTime.iso8601/text(),1,8)))
+	}
+	</acc>
 </get:GetAccumulatorByIdResponse>]]></con3:xqueryText>
                         </con2:expr>
                     </con2:replace>

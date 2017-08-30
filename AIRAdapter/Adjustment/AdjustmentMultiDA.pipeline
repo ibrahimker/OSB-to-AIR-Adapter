@@ -8,6 +8,11 @@
                 <con:namespace>http://www.example.org/INAdjustmentMultiDA/</con:namespace>
             </con:binding>
         </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:logging enabled="false" level="debug"/>
+            <oper:monitoring enabled="true" level="service" aggregationInterval="10"/>
+            <oper:pipeline-alerting enabled="false" level="normal"/>
+        </oper:operations>
         <con:xqConfiguration>
             <con:snippetVersion>1.0</con:snippetVersion>
         </con:xqConfiguration>
@@ -397,7 +402,7 @@ return $status</con3:xqueryText>
 <ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
 <ModuleName>Adapter</ModuleName>
 <ServiceName>AIRAdapter</ServiceName>
-<FlowName>AdjustmetnMultiDA</FlowName>
+<FlowName>AdjustmentMultiDA</FlowName>
 <ChannelName></ChannelName>
 <Command></Command>
 <MSISDN>{$msisdn}</MSISDN>

@@ -11,6 +11,7 @@
 
     <modules>
         <module>System</module>
+        <module>AIRAdapter</module>
         <module>CommonConfiguration</module>
     </modules>
 

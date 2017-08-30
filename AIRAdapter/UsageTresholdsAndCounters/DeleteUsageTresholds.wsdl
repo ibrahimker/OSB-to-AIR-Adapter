@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/DeleteUsageThreshold/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DeleteUsageThreshold" targetNamespace="http://www.example.org/DeleteUsageThreshold/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/DeleteUsageThreshold/">
+      <xsd:element name="DeleteUsageThresholdRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transId" type="xsd:string"/>
+            <xsd:element name="msisdn" type="xsd:string"/>
+            <xsd:element name="originOperatorId" type="xsd:decimal" minOccurs="0"/>
+            <xsd:element name="usageThresholdIds" type="xsd:string"/>
+            <xsd:element name="associatedPartyIds" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="DeleteUsageThresholdResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DeleteUsageThresholdRequestMessage">
+    <wsdl:part element="tns:DeleteUsageThresholdRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteUsageThresholdResponseResponse">
+    <wsdl:part element="tns:DeleteUsageThresholdResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="DeleteUsageThreshold">
+    <wsdl:operation name="initiate">
+      <wsdl:input message="tns:DeleteUsageThresholdRequestMessage"/>
+      <wsdl:output message="tns:DeleteUsageThresholdResponseResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DeleteUsageThresholdSOAP" type="tns:DeleteUsageThreshold">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="initiate">
+      <soap:operation soapAction="http://www.example.org/DeleteUsageThreshold/initiate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DeleteUsageThreshold">
+    <wsdl:port binding="tns:DeleteUsageThresholdSOAP" name="DeleteUsageThresholdSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

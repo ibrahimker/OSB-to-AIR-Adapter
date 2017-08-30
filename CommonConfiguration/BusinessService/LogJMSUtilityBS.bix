@@ -4,6 +4,8 @@
         <con:binding type="abstract XML"/>
         <oper:operations enabled="true" xmlns:cus="http://www.bea.com/wli/config/customizations" xmlns:xt="http://www.bea.com/wli/config/xmltypes">
             <oper:throttling enabled="false"/>
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
+            <oper:sla-alerting enabled="false" level="normal"/>
             <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
         </oper:operations>
         <con:xqConfiguration>
@@ -14,9 +16,9 @@
         <tran:provider-id>jms</tran:provider-id>
         <tran:inbound>false</tran:inbound>
         <tran:URI>
-            <!-- SIT Server -->
-            <!-- <env:value>jms://10.147.114.14:8005/jms.Ngssp_ConnectionFactory/jms.Ngssp_CommonQueue</env:value> -->
-            <!-- UAT D1 Server -->
+            <!--SIT Server-->
+            <!--<env:value>jms://10.147.114.14:8005/jms.Ngssp_ConnectionFactory/jms.Ngssp_CommonQueue</env:value>-->
+            <!--UAT D1 Server-->
             <env:value>jms://10.147.114.15:8003/jms.Ngssp_ConnectionFactory/jms.Ngssp_CommonQueue</env:value>
         </tran:URI>
         <tran:outbound-properties>

@@ -9,7 +9,10 @@
             </con:binding>
         </con:binding>
         <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:logging enabled="false" level="debug"/>
             <oper:monitoring enabled="true" level="service" aggregationInterval="10"/>
+            <oper:reporting>false</oper:reporting>
+            <oper:pipeline-alerting enabled="false" level="normal"/>
             <oper:sla-alerting enabled="false" level="normal"/>
         </oper:operations>
         <con:xqConfiguration>

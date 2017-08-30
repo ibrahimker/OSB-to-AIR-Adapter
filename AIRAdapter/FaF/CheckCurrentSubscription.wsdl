@@ -1,0 +1,67 @@
+<definitions 
+ name="INCheckCurrentSubsription"
+ targetNamespace="http://xmlns.oracle.com/INCheckCurrentSubsription"
+ xmlns="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:tns="http://xmlns.oracle.com/INCheckCurrentSubsription"
+ xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:client="http://xmlns.oracle.com/INCheckCurrentSubsription"
+ > 
+ <types> 
+  <schema attributeFormDefault="unqualified"
+   elementFormDefault="qualified"
+   targetNamespace="http://xmlns.oracle.com/INCheckCurrentSubsription"
+   xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="INCheckCurrentSubsriptionProcessRequest">
+    <complexType>
+     <sequence>
+      <element name="msisdn" type="string"/>
+      <element name="transId" type="string"/>                                
+    </sequence>
+  </complexType>
+</element>
+<element name="INCheckCurrentSubsriptionProcessResponse">
+  <complexType>
+   <sequence>
+     <element name="result" type="string"/>
+     <element name="FAFs" type="string"/>		                  
+   </sequence>
+ </complexType>
+</element>
+</schema> 
+</types> 
+<message name="INCheckCurrentSubsriptionRequestMessage"> 
+  <part name="payload" element="tns:INCheckCurrentSubsriptionProcessRequest"/> 
+</message> 
+<message name="INCheckCurrentSubsriptionResponseMessage"> 
+  <part name="payload" element="tns:INCheckCurrentSubsriptionProcessResponse"/> 
+</message> 
+<portType name="INCheckCurrentSubsription"> 
+  <operation name="process"> 
+    <input message="tns:INCheckCurrentSubsriptionRequestMessage"/> 
+    <output message="tns:INCheckCurrentSubsriptionResponseMessage"/> 
+  </operation> 
+</portType> 
+<binding name="INCheckCurrentSubsriptionBinding" type="tns:INCheckCurrentSubsription"> 
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/> 
+  <operation name="process"> 
+    <soap:operation style="document" soapAction="process"/> 
+    <input> 
+      <soap:body use="literal"/> 
+    </input> 
+    <output> 
+      <soap:body use="literal"/> 
+    </output> 
+  </operation> 
+</binding> 
+<service name="INCheckCurrentSubsription"> 
+  <port name="INCheckCurrentSubsriptionPort" binding="tns:INCheckCurrentSubsriptionBinding"> 
+    <soap:address location="http://localhost:8888/orabpel/default/INCheckCurrentSubsription/1.0"/> 
+  </port> 
+</service> 
+<plnk:partnerLinkType name="INCheckCurrentSubsription"> 
+  <plnk:role name="INCheckCurrentSubsriptionProvider"> 
+    <plnk:portType name="tns:INCheckCurrentSubsription"/> 
+  </plnk:role> 
+</plnk:partnerLinkType> 
+</definitions>

@@ -4,6 +4,7 @@
         <con:binding type="abstract XML"/>
         <oper:operations enabled="true">
             <oper:throttling enabled="false"/>
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
             <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
         </oper:operations>
         <con:ws-policy>

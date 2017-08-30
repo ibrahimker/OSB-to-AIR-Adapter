@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="AIRAdapter/FaF/FaFSubs"/>
+            <con:binding>
+                <con:name>INFafSubsBinding</con:name>
+                <con:namespace>http://xmlns.oracle.com/INFafSubs</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-a0a6719.7235b7ce.0.15de1df580b.N7d8c">
+        <con:pipeline type="request" name="request-a0a6719.7235b7ce.0.15de1df580b.N7f3e" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7f3d" name="Initialisation">
+                <con:context>
+                    <con1:userNsDecl prefix="get6" namespace="http://www.example.org/GetINAllInfo2/"/>
+                    <con1:userNsDecl prefix="inf" namespace="http://xmlns.oracle.com/INFafSubs"/>
+                    <con1:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/"/>
+                    <con1:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulators/"/>
+                    <con1:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/"/>
+                    <con1:userNsDecl prefix="get1" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/"/>
+                    <con1:userNsDecl prefix="get2" namespace="http://www.example.org/GetActDate/"/>
+                    <con1:userNsDecl prefix="get3" namespace="http://www.example.org/GetINDABalance/"/>
+                    <con1:userNsDecl prefix="get4" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/"/>
+                    <con1:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions"/>
+                    <con1:userNsDecl prefix="get5" namespace="http://www.example.org/GetINAllInfo/"/>
+                    <con1:userNsDecl prefix="inc" namespace="http://xmlns.oracle.com/INCheckCurrentSubsription"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getOrderID"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con5:assign varName="startreqbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f3c</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                    <con2:assign varName="transID">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f3b</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/inf:INFafSubsProcessRequest/inf:transId/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="msisdn">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f3a</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/inf:INFafSubsProcessRequest/inf:msisdn/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="orderID">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f39</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getOrderID($msisdn,$startreqbe)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7f38" name="GetEnvironmentProperties">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f37</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerHost()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBHostname">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f36</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">if(fn:contains($OSBHostname,'.'))then fn:substring-before($OSBHostname,'.') else $OSBHostname</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="OSBIPAddress">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f35</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn-bea:ServerIPAddress()</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7f34" name="ProcessInput">
+                <con:context>
+                    <con3:userNsDecl prefix="set" namespace="http://www.example.org/SetAccumulator/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="get" namespace="http://indosatooredoo.com/ngssp/schemas/GetAccumulatorByID/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="upd" namespace="http://indosatooredoo.com/ngssp/schemas/UpdateOffer/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="del" namespace="http://indosatooredoo.com/ngssp/schemas/DeleteOffer/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="get1" namespace="http://www.example.org/GetINDABalance/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="get2" namespace="http://indosatooredoo.com/ngssp/schemas/GetMultiDA/" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="ind" namespace="http://www.indosatooredoo.com" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/formatDateTime"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f33</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<methodCall>
+<methodName>GetFaFList</methodName>
+<params>
+<param>
+<value>
+<struct>
+<member>
+<name>originNodeType</name>
+<value>
+<string>EXT</string>
+</value>
+</member>
+<member>
+<name>originHostName</name>
+<value>
+<string>{$OSBHostname}</string>
+</value>
+</member>
+<member>
+<name>originTransactionID</name>
+<value>
+<string>{$orderID}</string>
+</value>
+</member>
+<member>
+<name>originTimeStamp</name>
+<value>
+<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
+</value>
+</member>
+<member>
+<name>subscriberNumberNAI</name>
+<value>
+<i4>1</i4>
+</value>
+</member>
+<member>
+<name>subscriberNumber</name>
+<value>
+<string>{$msisdn}</string>
+</value>
+</member>
+<member>
+<name>requestedOwner</name>
+<value>
+<i4>1</i4>
+</value>
+</member>
+</struct>
+</value>
+</param>
+</params>
+</methodCall>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7f32" name="Log Req BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f31</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con1:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f30</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>REQ_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFSubs</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage>{$body}</RequestMessage>
+<ResponseMessage></ResponseMessage>
+<StatusCode></StatusCode>
+<StatusDescription></StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-a0a6719.7235b7ce.0.15de1df580b.N7f2f" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7f2e" name="Initialisation">
+                <con:context/>
+                <con:actions>
+                    <con5:assign varName="startresbe" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f2d</con2:id>
+                        <con5:expr>
+                            <con2:xqueryText>current-dateTime()</con2:xqueryText>
+                        </con5:expr>
+                    </con5:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7f2c" name="Transform Status Code">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:userNsDecl prefix="adap" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/AdapterErrorMapping" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorCode"/>
+                        <con3:importModule ref="AIRAdapter/Resources/getErrorDesc"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="bestatus">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f2b</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">let $count := count($body/methodResponse/fault)
+return 
+if ($count eq 0) then
+let $status := $body/methodResponse/params/param/value/struct/member[name="responseCode"]/value/i4/text()
+return $status
+else
+let $status := $body/methodResponse/fault/value/struct/member[name="faultCode"]/value/i4/text()
+return $status</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="bedesc">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f2a</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/methodResponse/fault/value/struct/member[name="faultString"]/value/string/text()</con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="festatus">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f29</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorCode($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:assign varName="fedesc">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f28</con1:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">local:getErrorDesc($bestatus)</con3:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7f27" name="ProcessOutput">
+                <con:context>
+                    <con3:userNsDecl prefix="local" namespace="http://www.w3.org/2005/xquery-local-functions" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                    <con3:dependencies xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                        <con3:importModule ref="AIRAdapter/Resources/normaliseDAValue"/>
+                    </con3:dependencies>
+                </con:context>
+                <con:actions>
+                    <con2:assign varName="list">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f26</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<List>
+{
+let $a := $body/methodResponse/params/param/value/struct/member[name="fafInformationList"]/value/array/data/value
+for $v in $a
+return
+<Member>
+<ID>{$v/struct/member[name="fafIndicator"]/value/i4/text()}</ID>
+<Msisdn>{$v/struct/member[name="fafNumber"]/value/string/text()}</Msisdn>
+</Member>
+}
+</List>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                    <con2:replace contents-only="true" varName="body">
+                        <con1:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f25</con1:id>
+                        <con2:location>
+                            <con1:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<inf:INFafSubsProcessResponse xmlns:inf="http://xmlns.oracle.com/INFafSubs">
+<inf:result>{$festatus}</inf:result>
+<inf:description>{$fedesc}</inf:description>
+<inf:FAFs>
+{
+for $d in distinct-values($list//ID) return
+<inf:Group>
+<inf:ID>{$d}</inf:ID>
+<inf:Members>
+{ for $v in $list//Member[ID = $d] return
+<inf:Msisdn>{$v/Msisdn/text()}</inf:Msisdn>
+}
+</inf:Members>
+</inf:Group>
+}
+</inf:FAFs>
+</inf:INFafSubsProcessResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7f24" name="Log Res BE" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f23</con2:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7f22</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startresbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFSubs</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$body}</ResponseMessage>
+<StatusCode>{$festatus}</StatusCode>
+<StatusDescription>{$fedesc}</StatusDescription>
+<BackendStatusCode>{$bestatus}</BackendStatusCode>
+<BackendStatusDescription>{$bedesc}</BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a0a6719.7235b7ce.0.15de1df580b.N7d8c">
+            <con:stage id="_StageId-a0a6719.7235b7ce.0.15de1df580b.N7ce6" name="handling backend" xmlns:con4="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con5="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7ce5</con6:id>
+                        <con1:location>
+                            <con3:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con3:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<inf:INFafSubsProcessResponse xmlns:inf="http://xmlns.oracle.com/INFafSubs">
+<inf:result>99</inf:result>
+<inf:description>Backend Not Available</inf:description>
+<inf:FAFs>
+<inf:Group>
+<inf:ID></inf:ID>
+<inf:Members>
+<inf:Msisdn></inf:Msisdn>
+</inf:Members>
+</inf:Group>
+</inf:FAFs>
+</inf:INFafSubsProcessResponse>]]></con6:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con4:route xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7ce4</con6:id>
+                        <con4:service ref="CommonConfiguration/BusinessService/LogJMSUtilityBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con4:outboundTransform>
+                            <con5:replace varName="body" contents-only="true" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con6:id xmlns:con6="http://www.bea.com/wli/sb/stages/config">_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7ce3</con6:id>
+                                <con1:location>
+                                    <con2:xpathText xmlns:con6="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config"><![CDATA[<NgsspTransactionDataRecord xmlns="http://indosatooredoo.com/ngssp/schemas/TransactionDataRecord">
+<StartTimestamp>{$startreqbe}</StartTimestamp>
+<EndTimestamp>{current-dateTime()}</EndTimestamp>
+<TransactionId>{$transID}</TransactionId>
+<OrderId>{$orderID}</OrderId>
+<RequestType>RES_BE</RequestType>
+<CallingHostName>{$OSBHostname}</CallingHostName>
+<CallingHostAddress>{$OSBIPAddress}</CallingHostAddress>
+<ProcessingHostName>{$OSBHostname}</ProcessingHostName>
+<ProcessingHostAddress>{$OSBIPAddress}</ProcessingHostAddress>
+<ModuleName>Adapter</ModuleName>
+<ServiceName>AIRAdapter</ServiceName>
+<FlowName>FaFSubs</FlowName>
+<ChannelName></ChannelName>
+<Command></Command>
+<MSISDN>{$msisdn}</MSISDN>
+<PackageCompositeKey></PackageCompositeKey>
+<RequestMessage></RequestMessage>
+<ResponseMessage>{$fault}</ResponseMessage>
+<StatusCode>99</StatusCode>
+<StatusDescription>Backend Not Available</StatusDescription>
+<BackendStatusCode></BackendStatusCode>
+<BackendStatusDescription></BackendStatusDescription>
+</NgsspTransactionDataRecord>]]></con6:xqueryText>
+                                </con1:expr>
+                            </con5:replace>
+                        </con4:outboundTransform>
+                    </con4:route>
+                    <con3:reply isError="true" xmlns:con6="http://www.bea.com/wli/sb/stages/config">
+                        <con6:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7ce2</con6:id>
+                    </con3:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Main" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:request>request-a0a6719.7235b7ce.0.15de1df580b.N7f3e</con:request>
+                <con:response>response-a0a6719.7235b7ce.0.15de1df580b.N7f2f</con:response>
+            </con:pipeline-node>
+            <con:route-node name="Route to BS">
+                <con:context/>
+                <con:actions>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                        <con2:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7dbf</con2:id>
+                        <con1:service ref="AIRAdapter/BusinessServices/GetFafList" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:outboundTransform>
+                            <con3:transport-headers copy-all="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-a0a6719.7235b7ce.0.15de1df580b.N7dbe</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="Content-Type">
+                                    <con2:xqueryText>'text/xml'</con2:xqueryText>
+                                </con3:header>
+                                <con3:header value="expression" name="User-Agent">
+                                    <con2:xqueryText>'EXT/5.0/1.0'</con2:xqueryText>
+                                </con3:header>
+                                <con3:header value="expression" name="Connection">
+                                    <con2:xqueryText>'Keep-Alive, TE'</con2:xqueryText>
+                                </con3:header>
+                                <con3:header value="expression" name="Accept-Encoding">
+                                    <con2:xqueryText>'gzip, x-gzip, compress, x-compress'</con2:xqueryText>
+                                </con3:header>
+                            </con3:transport-headers>
+                        </con1:outboundTransform>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

@@ -1,0 +1,83 @@
+<methodCall>
+<methodName>UpdateUsageThresholdsAndCounters</methodName>
+<params>
+<param>
+<value>
+<struct>
+<member>
+<name>originNodeType</name>
+<value>
+<string>EXT</string>
+</value>
+</member>
+<member>
+<name>originHostName</name>
+<value>
+<string>{$OSBHostname}</string>
+</value>
+</member>
+<member>
+<name>originTransactionID</name>
+<value>
+<string>{$orderID}</string>
+</value>
+</member>
+<member>
+<name>originTimeStamp</name>
+<value>
+<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
+</value>
+</member>
+<member>
+<name>subscriberNumberNAI</name>
+<value>
+<i4>1</i4>
+</value>
+</member>
+<member>
+<name>subscriberNumber</name>
+<value>
+<string>{$msisdn}</string>
+</value>
+</member>
+<member>
+<name>usageThresholdUpdateInformation</name>
+<value>
+<array>
+<data>
+<value>
+<struct>
+<member>
+<name>usageThresholdID</name>
+<value>
+<i4>{$body/upd1:UpdateUsageThresholdRequest/thresholdId/text()}</i4>
+</value>
+</member>
+<member>
+<name>usageThresholdValueNew</name>
+<value>
+<string>{$body/upd1:UpdateUsageThresholdRequest/newThresholdValue/text()}</string>
+</value>
+</member>
+{
+	if(fn:exists($body/upd1:UpdateUsageThresholdRequest/associatedPartyId/text())) then
+	<member>
+	<name>associatedPartyID</name>
+	<value>
+	<string>{$body/upd1:UpdateUsageThresholdRequest/associatedPartyId/text()}</string>
+	</value>
+	</member>
+	else
+	''
+}
+</struct>
+</value>
+</data>
+</array>
+</value>
+</member>
+</struct>
+</value>
+</param>
+</params>
+</methodCall>

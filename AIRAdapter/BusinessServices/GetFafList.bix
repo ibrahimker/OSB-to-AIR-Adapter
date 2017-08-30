@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:businessServiceEntry xmlns:con="http://xmlns.oracle.com/servicebus/business/config" xmlns:oper="http://xmlns.oracle.com/servicebus/business/operations" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+    <con:coreEntry>
+        <con:description>The GetFaFList message is used to fetch the list of Family and Friends
+numbers with attached FaF indicators.</con:description>
+        <con:binding type="abstract XML"/>
+        <oper:operations enabled="true">
+            <oper:throttling enabled="false"/>
+            <oper:monitoring enabled="true" aggregationInterval="10"/>
+            <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
+        </oper:operations>
+        <con:ws-policy>
+            <ser:binding-mode>no-policies</ser:binding-mode>
+        </con:ws-policy>
+        <con:xqConfiguration>
+            <ser:snippetVersion>1.0</ser:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:endpointConfig>
+        <tran:provider-id>http</tran:provider-id>
+        <tran:inbound>false</tran:inbound>
+        <tran:URI>
+            <env:value>http://10.34.22.200:10011/Air</env:value>
+        </tran:URI>
+        <tran:URI>
+            <env:value>http://10.34.22.201:10011/Air</env:value>
+        </tran:URI>
+        <tran:outbound-properties>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>30</tran:retry-interval>
+            <tran:retry-application-errors>false</tran:retry-application-errors>
+        </tran:outbound-properties>
+        <tran:provider-specific xsi:type="http:HttpEndPointConfiguration">
+            <http:outbound-properties>
+                <http:request-method>POST</http:request-method>
+                <http:timeout>5</http:timeout>
+                <http:connection-timeout>1</http:connection-timeout>
+                <http:outbound-authentication xsi:type="http:HttpBasicAuthenticationType"/>
+                <http:service-account ref="AIRAdapter/Resources/NGSSP"/>
+                <http:follow-redirects>false</http:follow-redirects>
+                <http:chunked-streaming-mode>false</http:chunked-streaming-mode>
+                <http:session-sctikiness enabled="false" session-id-name="JSESSIONID"/>
+            </http:outbound-properties>
+            <http:dispatch-policy>SBDefaultResponseWorkManager</http:dispatch-policy>
+            <http:compression>
+                <http:compression-support>false</http:compression-support>
+            </http:compression>
+        </tran:provider-specific>
+    </con:endpointConfig>
+    <aler:alertRules xmlns:aler="http://xmlns.oracle.com/servicebus/monitoring/alert">
+        <aler:alertRule enabled="true" name="ResponseTime">
+            <aler:frequency>every-time</aler:frequency>
+            <aler:severity>normal</aler:severity>
+            <aler:stopProcessing>false</aler:stopProcessing>
+            <aler:condition aggregation-interval="5">
+                <con2:monCondExpr xmlns:con2="http://xmlns.oracle.com/servicebus/monitoring/alert/condition">
+                    <con2:function>max</con2:function>
+                    <con2:lhs>Transport.response-time</con2:lhs>
+                    <con2:operator>></con2:operator>
+                    <con2:rhs>20</con2:rhs>
+                </con2:monCondExpr>
+            </aler:condition>
+            <aler:alertDestination ref="AIRAdapter/AIRAlertService"/>
+        </aler:alertRule>
+    </aler:alertRules>
+</con:businessServiceEntry>

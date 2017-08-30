@@ -182,7 +182,7 @@
     <row>
         <backEndStatus>127</backEndStatus>
         <backEndDescription>Accumulator not available</backEndDescription>
-        <frontEndStatus>1</frontEndStatus>
+        <frontEndStatus>0</frontEndStatus>
     </row>
     <row>
         <backEndStatus>128</backEndStatus>

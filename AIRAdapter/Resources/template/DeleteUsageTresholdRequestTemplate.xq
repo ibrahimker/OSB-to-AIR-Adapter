@@ -1,0 +1,88 @@
+<methodCall>
+<methodName>DeleteUsageThresholds</methodName>
+<params>
+<param>
+<value>
+<struct>
+<member>
+<name>originNodeType</name>
+<value>
+<string>EXT</string>
+</value>
+</member>
+<member>
+<name>originHostName</name>
+<value>
+<string>{$OSBHostname}</string>
+</value>
+</member>
+<member>
+<name>originTransactionID</name>
+<value>
+<string>{$orderID}</string>
+</value>
+</member>
+<member>
+<name>originTimeStamp</name>
+<value>
+<dateTime.iso8601>{local:formatDateTime($startreqbe)}</dateTime.iso8601>
+</value>
+</member>
+<member>
+<name>subscriberNumberNAI</name>
+<value>
+<i4>1</i4>
+</value>
+</member>
+<member>
+<name>subscriberNumber</name>
+<value>
+<string>{$msisdn}</string>
+</value>
+</member>
+<member>
+<name>usageThresholds</name>
+<value>
+<array>
+<data>
+<value>
+<struct>
+<member>
+<name>usageThresholdID</name>
+<value>
+<string>{$body/del1:DeleteUsageThresholdRequest/originOperatorId/text()}</string>
+</value>
+</member>
+{
+	if(fn:exists($body/del1:DeleteUsageThresholdRequest/associatedPartyIds/text())) then
+	<member>
+	<name>associatedPartyID</name>
+	<value>
+	<string>{$body/del1:DeleteUsageThresholdRequest/associatedPartyIds/text()}</string>
+	</value>
+	</member>
+	else
+	''
+}
+</struct>
+</value>
+</data>
+</array>
+</value>
+</member>
+{
+	if(fn:exists($body/del1:DeleteUsageThresholdRequest/originOperatorId/text())) then
+	<member>
+	<name>originOperatorID</name>
+	<value>
+	<string>{$body/del1:DeleteUsageThresholdRequest/originOperatorId/text()}</string>
+	</value>
+	</member>
+	else
+	''
+}
+</struct>
+</value>
+</param>
+</params>
+</methodCall>
